@@ -1,0 +1,46 @@
+.Banner {
+  background-color: #f2f2f2;
+}
+.Banner-content {
+  display: flex;
+}
+
+.Banner-text {
+  flex: 50%;
+  height: 41vh;
+  margin: auto;
+  padding: 15px;
+}
+.Banner-text-heading {
+  display: flex;
+  justify-content: center;
+}
+.Banner-text-description {
+  display: flex;
+  justify-content: center;
+}
+.Banner-text-description p {
+  width: 30vw;
+}
+.Banner-text h1 {
+  font-variant: petite-caps;
+  margin-bottom: 0;
+}
+.Banner-image {
+  flex: 50%;
+  /* height: 50vh; */
+}
+
+@media only screen and (max-width: 650px) {
+  .Banner-image {
+    height: 50vh;
+  }
+  .Banner-image img {
+    width: 145px;
+    height: 74vh;
+    object-fit: contain;
+  }
+  .Banner-text-description p {
+    width: 40vw;
+  }
+}

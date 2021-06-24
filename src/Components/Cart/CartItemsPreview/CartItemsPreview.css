@@ -1,0 +1,45 @@
+#c1,
+#c2,
+#c3 {
+  width: 33%;
+}
+#c3 {
+  margin-left: 10px;
+}
+
+.wrapper {
+  padding: 20px;
+  width: auto;
+  margin-top: 20px;
+  display: flex;
+  border-style: inset;
+}
+.image-content img {
+  width: 15vw;
+  height: 25vh;
+}
+.coupon-action {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 17.5vw;
+}
+.border-button {
+  width: 12vw;
+  margin: 10px 0 0 0;
+  border: solid 1px #221f20;
+  transition: border-width 0.6s linear;
+}
+
+.border-button:hover {
+  border-width: 2px;
+}
+@media only screen and (max-width: 650px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .image-content img {
+    width: auto;
+  }
+}

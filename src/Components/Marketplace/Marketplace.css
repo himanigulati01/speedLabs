@@ -1,0 +1,25 @@
+h1 {
+  display: flex;
+  position: relative;
+  left: 9vw;
+  font-variant: petite-caps;
+  width: 51vw;
+}
+
+.Marketplace {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 1240px) {
+  .Marketplace {
+    grid-template-columns: auto auto;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .Marketplace {
+    grid-template-columns: auto;
+  }
+}

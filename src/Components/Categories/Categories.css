@@ -1,0 +1,13 @@
+.Container {
+  display: flex;
+  justify-content: center;
+}
+.Categories-container {
+  width: 75vw;
+}
+
+@media only screen and (max-width: 650px) {
+  .Categories-container {
+    width: 100vw;
+  }
+}
