@@ -22,13 +22,15 @@ const CartItemsPreview = ({ product_id, price_before_coupon, net_price }) => {
 
   return (
     <div className="wrapper">
-      <div id="c1" className="image-content">
-        <img src={product?.image_url} alt="product_image" />
-      </div>
+      <div className="wrapper-part1">
+        <div id="c1" className="image-content">
+          <img src={product?.image_url} alt="product_image" />
+        </div>
 
-      <div id="c2" className="description-content">
-        <h2>{product?.product_name}</h2>
-        <p>by {product?.creator_name}</p>
+        <div id="c2" className="description-content">
+          <h2>{product?.product_name}</h2>
+          <p>by {product?.creator_name}</p>
+        </div>
       </div>
 
       <div id="c3" className="amount-content">
@@ -36,38 +38,41 @@ const CartItemsPreview = ({ product_id, price_before_coupon, net_price }) => {
         {price_before_coupon - net_price !== 0 && (
           <h3>Rs.{price_before_coupon - net_price} Off</h3>
         )}
+        <div className="coupon-content">
+          <div className="coupon-input">
+            <TextField
+              label="Coupon"
+              onChange={(event) => setCoupon(event.target.value)}
+            />
+          </div>
 
-        <div className="coupon-input">
-          <TextField
-            label="Apply Coupon"
-            onChange={(event) => setCoupon(event.target.value)}
-          />
-        </div>
+          <div className="coupon-action">
+            <Button
+              className="border-button"
+              variant="outlined"
+              color="inherit"
+              type="submit"
+              onClick={() => applyCoupon(product_id, coupon)}
+            >
+              <span>Apply</span>
+            </Button>
 
-        <div className="coupon-action">
-          <Button
-            className="border-button"
-            variant="outlined"
-            color="inherit"
-            type="submit"
-            onClick={() => applyCoupon(product_id, coupon)}
-          >
-            Apply
-          </Button>
-
-          <Button
-            className="border-button"
-            style={{ marginTop: "7px" }}
-            variant="contained"
-            color="default"
-            type="submit"
-            onClick={() => removeCoupon(product_id)}
-          >
-            Remove
-          </Button>
+            <Button
+              className="border-button"
+              style={{ marginTop: "7px" }}
+              variant="contained"
+              color="default"
+              type="submit"
+              onClick={() => removeCoupon(product_id)}
+            >
+              Remove
+            </Button>
+          </div>
         </div>
       </div>
-      <RemoveCircleOutlineIcon onClick={() => removeItem(product.id)} />
+      <div className="remove-button">
+        <RemoveCircleOutlineIcon onClick={() => removeItem(product.id)} />
+      </div>
     </div>
   );
 };

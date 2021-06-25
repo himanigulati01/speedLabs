@@ -1,8 +1,10 @@
 h1 {
   display: flex;
   position: relative;
-  left: 9vw;
-  font-variant: petite-caps;
+  left: 11.4vw;
+  font-family: Georgia, sans-serif;
+  font-size: 2em;
+  letter-spacing: -2px;
   width: 51vw;
 }
 

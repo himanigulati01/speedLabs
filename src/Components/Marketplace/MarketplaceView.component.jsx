@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import CardActions from "@material-ui/core/CardActions";
 import { Divider, Grid } from "@material-ui/core";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
@@ -25,14 +26,20 @@ const useStyles = makeStyles((theme) => ({
     margin: "55px",
     marginTop: "10px",
     background: "#f2f2f2",
+    fontFamily:"math",
     boxShadow: "0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)",
     '&:hover': {
       boxShadow: "7px 4px 29px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)",
-      },
+      transform: "scale(1.02)"
+    },
+    overflow:"hidden",
+  
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
+     // 16:9
+   
   },
   avatar: {
     backgroundColor: red[500],
@@ -120,7 +127,7 @@ function MarketplaceView(props) {
               }
               onClick={() => addItemToCart(product_id)}
             >
-              Add to Cart
+               <AddShoppingCartIcon/>
             </Button>
           ) : (
             <Button size="small" color="primary">

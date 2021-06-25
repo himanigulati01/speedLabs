@@ -1,7 +1,7 @@
 import React from "react";
+import PaymentIcon from "@material-ui/icons/Payment";
+import Button from "@material-ui/core/Button";
 function RazorpayButton(props) {
- 
-
   // console.log(props.clientID);
   var options = {
     key: "rzp_test_foKEivKbPBbsC3", // Enter the Key ID generated from the Dashboard
@@ -9,12 +9,15 @@ function RazorpayButton(props) {
     currency: "INR",
     name: "AtranZ Shopping",
     description: "Online Payment",
-     "order_id": props.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    order_id: props.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     handler: function (response) {
       alert("Payment Succesful");
-      props.onSuccess(response.razorpay_payment_id,response.razorpay_signature);
+      props.onSuccess(
+        response.razorpay_payment_id,
+        response.razorpay_signature
+      );
       // alert(response.razorpay_order_id);
-      alert(response.razorpay_signature)
+      alert(response.razorpay_signature);
     },
     // prefill: {
     //   name: String(props.user.name),
@@ -41,13 +44,16 @@ function RazorpayButton(props) {
     e.preventDefault();
   };
   return (
-    <button
-      id="rzp-button1"
-      className="button primary full-width"
-      onClick={payOrderHandler}
-    >
-      Proceed to Payment
-    </button>
+    <>
+      <Button
+        variant="contained"
+        color="default"
+        onClick={payOrderHandler}
+        endIcon={<PaymentIcon />}
+      >
+        Proceed to Pay
+      </Button>
+    </>
   );
 }
 export default RazorpayButton;

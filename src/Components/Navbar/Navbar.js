@@ -1,6 +1,7 @@
 import { ReorderOutlined, SearchOutlined } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Button } from "@material-ui/core";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
 
 import Badge from "@material-ui/core/Badge";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,6 +17,7 @@ import {
   CartLength,
   cartPayloader,
   isLogged,
+  searched,
 } from "../../States";
 import { isLogin, logout } from "../../utils";
 import "./Navbar.css";
@@ -35,11 +37,13 @@ const Navbar = (props) => {
   const [showLinks, setShowLinks] = useState(false);
   const [currentUser, setCurrentUser] = useRecoilState(isLogged);
 
+  const [, setSearchTerm] = useRecoilState(searched);
   useEffect(() => {
     setCurrentUser(isLogin());
   }, [setCurrentUser]);
 
   const [cartlength] = useRecoilState(CartLength);
+
   return (
     <div className="Navbar">
       <div className="leftSide">
@@ -52,7 +56,14 @@ const Navbar = (props) => {
             }}
           />
         </Link>
-        <input type="text" placeholder="Search" />
+
+        <input
+          type="text"
+          placeholder="Search"
+          onChange={(event) => {
+            setSearchTerm(event.target.value);
+          }}
+        />
         <button>
           <SearchOutlined />
         </button>
@@ -68,8 +79,13 @@ const Navbar = (props) => {
                   color: "#6d3088",
                 }}
               >
-                OrderHistory
+                <IconButton aria-label="cart">
+                  <StyledBadge badgeContent={cartlength} color="secondary">
+                    <MenuBookIcon />
+                  </StyledBadge>
+                </IconButton>
               </NavLink>
+
               <NavLink
                 to="/cart"
                 activeStyle={{

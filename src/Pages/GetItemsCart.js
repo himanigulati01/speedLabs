@@ -135,11 +135,7 @@ const GetItemsCart = () => {
         </div>
       ) : (
         <div className="Cart">
-          <div
-            style={{
-              marginLeft: "22px",
-            }}
-          >
+          <div className="Cart-items">
             {cartItems.map(({ ...otherCollectionProps }, index) => (
               <CartItemsPreview key={index} {...otherCollectionProps} />
             ))}

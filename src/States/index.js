@@ -7,6 +7,10 @@ export const UserDetails = atom({
   key: "UserDetails",
   default: {},
 });
+export const searched = atom({
+  key: "searched",
+  default: "",
+});
 
 export const isLogged = atom({
   key: "isLogin",
