@@ -1,0 +1,31 @@
+.Cart {
+  display: flex;
+  flex-direction: row;
+}
+
+.Total {
+  border-left: 6px solid purple;
+  background: #f2f2f2;
+  height: fit-content;
+  padding: 20px;
+  width: 19vw;
+  margin: 22px 0 0 52px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 650px) {
+  .Cart {
+    display: flex;
+    flex-direction: column;
+  }
+  .Total {
+    border-left: 6px solid purple;
+    background: rgb(242, 242, 242);
+    height: fit-content;
+    padding: 20px;
+    width: 80vw;
+    margin: 2px 0px 0px 20px;
+    display: flex;
+  }
+}

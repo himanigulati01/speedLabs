@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 import CartItemsPreview from "../Components/Cart/CartItemsPreview/CartItemsPreview";
-
+import "./GetItemsCart.css";
 import RazorpayButton from "../paymentGateway/RazorpayButton";
 import {
   cartItemsAdded,
@@ -12,17 +12,16 @@ import {
   cartPayloader,
   productDetails,
   UserDetails,
-  paymentResp
+  paymentResp,
 } from "../States";
 import { getToken } from "../utils";
 
 const GetItemsCart = () => {
-  const[paymentResponse, setPaymentResponse] = useRecoilState(paymentResp)
+  const [paymentResponse, setPaymentResponse] = useRecoilState(paymentResp);
   const [cartItems, setCartItems] = useRecoilState(cartItemsAdded);
   const [payloader, setPayloader] = useRecoilState(cartPayloader);
   const [products, setProducts] = useRecoilState(productDetails);
   const [, setCartlength] = useRecoilState(CartLength);
-  const [userDetails] = useRecoilState(UserDetails);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -80,7 +79,7 @@ const GetItemsCart = () => {
     }
   };
 
-  const handleSuccessPayment = async (payment_id,signature) => {
+  const handleSuccessPayment = async (payment_id, signature) => {
     try {
       const response = await fetch(
         "http://35.244.8.93:4000/api/users/cart/razorpay",
@@ -92,23 +91,23 @@ const GetItemsCart = () => {
           },
         }
       );
-      const paymentRes =await  response.json();
-      setPaymentResponse(paymentRes.details)
+      const paymentRes = await response.json();
+      setPaymentResponse(paymentRes.details);
       console.log(paymentResponse);
       console.log(payment_id);
       const item = {
         payment_id: payment_id,
-        order_id:paymentResponse.id
+        order_id: paymentRes.details.id,
       };
-      console.log(item)
-      console.log(signature)
-      postData(item,signature)
+      console.log(item);
+      console.log(signature);
+      postData(item, signature);
     } catch (error) {
       console.log(error);
-    }   
+    }
   };
 
-  const postData = async (item,signature) =>{
+  const postData = async (item, signature) => {
     try {
       const response = await fetch(
         "http://35.244.8.93:4000/api/users/cart/checkout",
@@ -116,30 +115,26 @@ const GetItemsCart = () => {
           method: "POST",
           body: JSON.stringify(item),
           headers: {
-            "x-razorpay-signature":signature,
+            "x-razorpay-signature": signature,
             "Content-Type": "application/json",
             Authorization: getToken(),
           },
         }
-        );
-        const paymentRes2 = await response.json();
-        console.log("res2",paymentRes2);
-        console.log(signature);
-   } catch (error) {
-     console.log(error);
-   }
-  }
+      );
+      const paymentRes2 = await response.json();
+      console.log("res2", paymentRes2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       {isLoading || cartItems === [] ? (
-        <CircularProgress />
+        <div>
+          <CircularProgress />
+        </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
+        <div className="Cart">
           <div
             style={{
               marginLeft: "22px",
@@ -149,26 +144,13 @@ const GetItemsCart = () => {
               <CartItemsPreview key={index} {...otherCollectionProps} />
             ))}
           </div>
-          <div
-            style={{
-              borderLeft: "6px solid purple",
-              background: "#f2f2f2",
-              height: "fit-content",
-              padding: "20px",
-              width: "19vw",
-              margin: "22px 0 0 52px",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          <div className="Total">
             <h2>Total Amount : Rs.{payloader.total_amt}</h2>
             <RazorpayButton
-              amount={payloader.total_amt*100}
+              amount={payloader.total_amt * 100}
               order_id={paymentResponse.id}
-             
               onSuccess={handleSuccessPayment}
             />
-
           </div>
         </div>
       )}

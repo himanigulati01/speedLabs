@@ -21,10 +21,14 @@ import { getToken } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: "300px",
     margin: "55px",
     marginTop: "10px",
     background: "#f2f2f2",
+    boxShadow: "0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)",
+    '&:hover': {
+      boxShadow: "7px 4px 29px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)",
+      },
   },
   media: {
     height: 0,
@@ -39,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
   disable: {
     color: red,
   },
+  paragharph:{
+    overflow: "hidden",
+    whiteSpace:" nowrap",
+    textOverflow: "ellipsis"
+  }
+  // Boxshadow: "0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)"
 }));
 
 function MarketplaceView(props) {
@@ -92,8 +102,8 @@ function MarketplaceView(props) {
         />
 
         <CardContent className={classes.text}>
-          <Typography paragraph>Category: {props.category}</Typography>
-          <Typography paragraph>{props.you_will_learn}</Typography>
+          
+          <Typography paragraph className={classes.paragharph}>{props.you_will_learn}</Typography>
           <Typography paragraph>Rs {props.price}</Typography>
         </CardContent>
 

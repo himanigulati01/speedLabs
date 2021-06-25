@@ -30,14 +30,14 @@ const StyledBadge = withStyles((theme) => ({
 }))(Badge);
 
 const Navbar = (props) => {
-  const [cartItems, setCartItems] = useRecoilState(cartItemsAdded);
-  const [payload, setPayload] = useRecoilState(cartPayloader);
+  const [, setCartItems] = useRecoilState(cartItemsAdded);
+  const [, setPayload] = useRecoilState(cartPayloader);
   const [showLinks, setShowLinks] = useState(false);
   const [currentUser, setCurrentUser] = useRecoilState(isLogged);
 
   useEffect(() => {
     setCurrentUser(isLogin());
-  }, []);
+  }, [setCurrentUser]);
 
   const [cartlength] = useRecoilState(CartLength);
   return (
@@ -45,8 +45,11 @@ const Navbar = (props) => {
       <div className="leftSide">
         <Link to="/">
           <img
-            src="	https://www.speedlabs.in/images/logo.svg"
+            src="https://camo.githubusercontent.com/f645dbb403703e322a68b18e5c3a771a015aa63e1a4ebbbfd1cf9bd95f836c32/68747470733a2f2f6d656469612d657870312e6c6963646e2e636f6d2f646d732f696d6167652f4334443042415145776c7837424549623568412f636f6d70616e792d6c6f676f5f3230305f3230302f302f313630393932393937383038323f653d3136333035343038303026763d6265746126743d69417333774469785f58474b4e68664d55693730384a43785353556f39774265566e3079487171576c6d73"
             alt="SpeedLab Logo"
+            style={{
+              borderRadius: "30%",
+            }}
           />
         </Link>
         <input type="text" placeholder="Search" />
@@ -59,7 +62,7 @@ const Navbar = (props) => {
           {currentUser ? (
             <>
               <NavLink
-                to="/"
+                to="/orders"
                 activeStyle={{
                   fontWeight: "bold",
                   color: "#6d3088",

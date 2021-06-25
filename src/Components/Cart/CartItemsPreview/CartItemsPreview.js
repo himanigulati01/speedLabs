@@ -27,8 +27,8 @@ const CartItemsPreview = ({ product_id, price_before_coupon, net_price }) => {
       </div>
 
       <div id="c2" className="description-content">
-        <h2>{product.product_name}</h2>
-        <p>by {product.creator_name}</p>
+        <h2>{product?.product_name}</h2>
+        <p>by {product?.creator_name}</p>
       </div>
 
       <div id="c3" className="amount-content">

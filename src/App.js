@@ -9,12 +9,15 @@ import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
 import GetItemsCart from "./Pages/GetItemsCart";
 import PrivateRoute from "./utils/PrivateRoute";
+import Order from "./Components/Orders/Order";
+
 function App() {
   return (
     <>
       <Route path="/" component={Navbar} />
       <Switch>
         <PrivateRoute path="/cart" exact component={GetItemsCart} />
+        <PrivateRoute path="/orders" exact component={Order} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
         <Route path={["/courses", "/"]}>
