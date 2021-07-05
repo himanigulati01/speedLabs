@@ -1,0 +1,22 @@
+#site-header {
+  margin: 0 0 30px 0;
+}
+
+#site-header h1 {
+  font-size: 31px;
+  font-weight: 300;
+  padding: 40px 0;
+  position: relative;
+  margin: 0;
+}
+
+.container {
+  font-family: "Open Sans", sans-serif;
+  margin: 0 auto;
+  width: 980px;
+}
+.orders {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

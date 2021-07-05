@@ -1,9 +1,13 @@
-import { CircularProgress } from "@material-ui/core";
+import "../Components/Cart/CartItemsPreview/CartPreview.css";
 
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-
-import CartItemsPreview from "../Components/Cart/CartItemsPreview/CartItemsPreview";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Alert from "@material-ui/lab/Alert";
+import Typography from "@material-ui/core/Typography";
+import CartItemsPreview1 from "../Components/Cart/CartItemsPreview/CartItemsPreview1";
 import "./GetItemsCart.css";
 import RazorpayButton from "../paymentGateway/RazorpayButton";
 import {
@@ -11,14 +15,14 @@ import {
   CartLength,
   cartPayloader,
   productDetails,
-  UserDetails,
   paymentResp,
 } from "../States";
 import { getToken } from "../utils";
+import Loading from "../Components/Loading";
 
 const GetItemsCart = () => {
-  const [paymentResponse, setPaymentResponse] = useRecoilState(paymentResp);
   const [cartItems, setCartItems] = useRecoilState(cartItemsAdded);
+  const [paymentResponse, setPaymentResponse] = useRecoilState(paymentResp);
   const [payloader, setPayloader] = useRecoilState(cartPayloader);
   const [products, setProducts] = useRecoilState(productDetails);
   const [, setCartlength] = useRecoilState(CartLength);
@@ -29,9 +33,10 @@ const GetItemsCart = () => {
       fetchProducts();
     }
   }, []);
+
   useEffect(() => {
     fetchCartItems();
-  }, []);
+  }, [products]);
 
   //fetching products in case user come directly to cart
   //if not, then recoil state product
@@ -54,6 +59,7 @@ const GetItemsCart = () => {
       console.log("Marketplace" + error);
     }
   };
+  //fetching products in case user come directly to cart
 
   //fetching Cart Items
   const fetchCartItems = async () => {
@@ -101,13 +107,25 @@ const GetItemsCart = () => {
       };
       console.log(item);
       console.log(signature);
-      postData(item, signature);
+      postData(
+        payment_id,
+        paymentRes.details.id,
+        paymentRes.details.amount,
+        signature
+      );
     } catch (error) {
       console.log(error);
     }
   };
-
-  const postData = async (item, signature) => {
+  const postData = async (payment_id, order_id, amount, signature) => {
+    const item = {
+      payment_id: payment_id,
+      order_id: order_id,
+      payment_secret: "S&xd!rstpLw!+w#u$EDnY_K^=UCah-?EBncknj35",
+      amount: amount,
+      currency: "INR",
+      receipt: "FDSJKI",
+    };
     try {
       const response = await fetch(
         "http://35.244.8.93:4000/api/users/cart/checkout",
@@ -128,28 +146,54 @@ const GetItemsCart = () => {
     }
   };
   return (
-    <div>
-      {isLoading || cartItems === [] ? (
-        <div>
-          <CircularProgress />
+    <div style={{ background: "#f7efff", height: "100%" }}>
+      <header id="site-header">
+        <div class="container">
+          <h1 style={{ padding: "16px 0" }}>Shopping cart</h1>
         </div>
-      ) : (
+      </header>
+      {(isLoading || cartItems === []) && (
+        <div>
+          <Loading />
+        </div>
+      )}
+      {payloader.total_amt === 0 && (
+        <Alert
+          icon={false}
+          severity="success"
+          style={{ placeContent: "center" }}
+        >
+          Empty Cart!!! Go to Marketplace and get some.
+        </Alert>
+      )}
+      {payloader.total_amt > 0 && (
         <div className="Cart">
           <div className="Cart-items">
             {cartItems.map(({ ...otherCollectionProps }, index) => (
-              <CartItemsPreview key={index} {...otherCollectionProps} />
+              <CartItemsPreview1 key={index} {...otherCollectionProps} />
             ))}
           </div>
-          <div className="Total">
-            <h2>Total Amount : Rs.{payloader.total_amt}</h2>
-            <RazorpayButton
-              amount={payloader.total_amt * 100}
-              order_id={paymentResponse.id}
-              onSuccess={handleSuccessPayment}
-            />
-          </div>
+          <Card className="Total">
+            <CardContent>
+              <Typography color="textSecondary" gutterBottom>
+                Total Amount
+              </Typography>
+
+              <Typography variant="h5" component="h2">
+                Rs.{payloader.total_amt}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <RazorpayButton
+                amount={payloader.total_amt * 100}
+                order_id={paymentResponse.id}
+                onSuccess={handleSuccessPayment}
+              />
+            </CardActions>
+          </Card>
         </div>
       )}
+      )
     </div>
   );
 };

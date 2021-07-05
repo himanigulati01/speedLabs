@@ -1,6 +1,7 @@
 import React from "react";
 import DoubleArrowIcon from "@material-ui/icons/DoubleArrow";
 import "./Banner.css";
+import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div className="Banner">
@@ -12,11 +13,16 @@ const Banner = () => {
             </h1>
           </div>
           <div className="Banner-text-description">
-            <p>Comprehensive learning programs & classes for all students.</p>
+            <div className="BannerButton">
+              <Link to="/login">
+                <button>LOGIN</button>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="Banner-image">
           <img
+            class="vert-move"
             src="https://www.speedlabs.in/wp-content/uploads/2021/05/pbtp-institute.png"
             alt="speedlab.png"
           />

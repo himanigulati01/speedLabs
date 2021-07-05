@@ -1,4 +1,5 @@
 .Banner {
+  width: -webkit-fill-available;
   background-color: #f2f2f2;
   padding-top: 10vh;
 }
@@ -44,4 +45,68 @@
   .Banner-text-description p {
     width: 40vw;
   }
+}
+img.vert-move {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+img.vert-move {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+@-webkit-keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.BannerButton button {
+  background: #7d497d;
+  color: #f2f2f2;
+  border: none;
+  position: relative;
+  height: 40px;
+  font-size: 1rem;
+  padding: 0 2em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+  border-radius: 10px;
+}
+.BannerButton button:hover {
+  background: #f2f2f2;
+  color: #821aab;
+}
+.BannerButton button:before,
+.BannerButton button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #ab1a87;
+  transition: 400ms ease all;
+}
+.BannerButton button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.BannerButton button:hover:before,
+button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
 }

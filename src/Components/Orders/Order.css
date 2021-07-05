@@ -1,0 +1,13 @@
+.Container {
+  width: max-content;
+  padding: 10px;
+  text-align-last: start;
+}
+.outer-container {
+  text-align: -webkit-center;
+  margin: 20px;
+  padding: 5px;
+}
+.title {
+  font-size: 14;
+}

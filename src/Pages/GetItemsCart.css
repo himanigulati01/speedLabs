@@ -7,14 +7,10 @@
   margin-left: 20px;
 }
 .Total {
-  border-left: 6px solid purple;
-  background: #f2f2f2;
+  width: 20%;
+  margin: 22px 62px;
   height: fit-content;
-  padding: 20px;
-  width: 19vw;
-  margin: 22px 0 0 52px;
-  display: flex;
-  flex-direction: column;
+  border-left: 8px solid purple;
 }
 
 @media only screen and (max-width: 650px) {

@@ -102,6 +102,8 @@ export const applyCoupon = async (id, coupon) => {
     if (applyCoupon.flag === 2) {
       <Alert severity="error">{applyCoupon.errors}</Alert>;
     }
+    alert("Coupon Added");
+
     console.log("COUPON ADDED", applyCoupon);
   } catch (error) {
     console.log("COUPON ADDED ERROR: " + error);

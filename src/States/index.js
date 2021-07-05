@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+
 export const productDetails = atom({
   key: "productDetails",
   default: [],
@@ -10,6 +11,22 @@ export const UserDetails = atom({
 export const searched = atom({
   key: "searched",
   default: "",
+});
+export const orderDetails = atom({
+  key: "orderDetails",
+  default: [],
+});
+export const purchasedProducts = atom({
+  key: "purchasedProducts",
+  default: [],
+});
+export const categoryId = atom({
+  key: "categoryId",
+  default: 0,
+});
+export const inst_id = atom({
+  key: "inst-id",
+  default: null,
 });
 
 export const isLogged = atom({
