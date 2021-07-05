@@ -8,9 +8,9 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 ReactDOM.render(
   <RecoilRoot>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   </RecoilRoot>,
 
   document.getElementById("root")
