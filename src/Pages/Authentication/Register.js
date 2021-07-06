@@ -1,28 +1,27 @@
-import React from 'react';
+import React from "react";
 import { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
-import Container from '@material-ui/core/Container';
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Avatar from "@material-ui/core/Avatar";
+import Container from "@material-ui/core/Container";
 import { Button, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
- 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -30,16 +29,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -49,12 +48,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Register(props) {
   const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [city, setCity] = useState("");
-    const [insta_id, setInsta_id] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
+  const [insta_id, setInsta_id] = useState();
 
-    
   const registerHandler = async (event) => {
     try {
       event.preventDefault();
@@ -69,9 +67,9 @@ function Register(props) {
           },
         }
       );
-      const registerResponse =await  postRegisterCredentials.json();
+      const registerResponse = await postRegisterCredentials.json();
       console.log(registerResponse);
-     if(registerResponse.ok)  props.history.push("/login");
+      if (registerResponse.ok) props.history.push("/login");
     } catch (error) {
       console.log("Register.js" + error);
     }
@@ -79,7 +77,7 @@ function Register(props) {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ padding: "50px" }}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -91,7 +89,7 @@ function Register(props) {
         <form className={classes.form} onSubmit={registerHandler}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField 
+              <TextField
                 name="Name"
                 variant="outlined"
                 required
@@ -149,21 +147,18 @@ function Register(props) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
-         
           </Grid>
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-           
             className={classes.submit}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-        
               <Link href="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
@@ -178,4 +173,4 @@ function Register(props) {
   );
 }
 
-export default  withRouter(Register)
+export default withRouter(Register);

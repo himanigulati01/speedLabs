@@ -7,11 +7,13 @@ import { BrowserRouter } from "react-router-dom";
 // import store from "./redux/store";
 import { RecoilRoot } from "recoil";
 ReactDOM.render(
-  <RecoilRoot>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  </RecoilRoot>,
+  <BrowserRouter>
+    <RecoilRoot>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </RecoilRoot>
+  </BrowserRouter>,
 
   document.getElementById("root")
 );

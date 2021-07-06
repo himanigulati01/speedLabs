@@ -1,5 +1,5 @@
 import { withRouter } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import MarketplaceView from "../Components/Marketplace/MarketplaceView.component";
@@ -18,14 +18,14 @@ const Products = (props) => {
   const [searcheTerm] = useRecoilState(searched);
   const [category_id] = useRecoilState(categoryId);
 
-  useEffect(() => {
-    if (products !== undefined && products.length === 0) {
-      fetchProducts();
-    }
-  }, []);
-  console.log(products.length + 1);
-  console.log(visible);
-  console.log(products.length + 1 === visible);
+  // useEffect(() => {
+  //   if (products !== undefined && products.length === 0) {
+  //     fetchProducts();
+  //   }
+  // }, []);
+  // console.log(products.length + 1);
+  // console.log(visible);
+  // console.log(products.length + 1 === visible);
 
   const fetchProducts = async () => {
     try {

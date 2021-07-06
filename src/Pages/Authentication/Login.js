@@ -46,8 +46,8 @@ function SignIn(props) {
   const [, setUserDetails] = useRecoilState(UserDetails);
   const [user_email, setEmail] = useRecoilState(userEmail);
   const [password, setPassword] = useState("");
-  const [instituteId] = useRecoilState(inst_id);
-  console.log(instituteId);
+  const [, setInstituteId] = useRecoilState(inst_id);
+
   function validateForm() {
     return user_email.length > 0 && password.length > 0;
   }
@@ -72,7 +72,7 @@ function SignIn(props) {
       setInstituteId(loginCredentials.details.user_inst_id);
       setUserDetails(loginCredentials.details);
       setIsLogged(true);
-      props.history.push(`/marketplace?institute=${getInstituteId()}`);
+      props.history.push(`/?institute=${getInstituteId()}`);
     } catch (error) {
       console.log("Login.js" + error);
     }
@@ -82,7 +82,7 @@ function SignIn(props) {
     <Container
       component="main"
       maxWidth="xs"
-      style={{ display: "flex", flexDirection: "row" }}
+      style={{ display: "flex", flexDirection: "row", padding: "50px" }}
     >
       <CssBaseline />
       <div className={classes.paper}>
