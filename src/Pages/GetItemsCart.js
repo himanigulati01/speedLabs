@@ -206,6 +206,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+// import { removeCoupon, removeItem } from "../Components/Cart/CartOperations";
+import { applyCoupon } from "../Components/Cart/CartOperations";
 // import RazorpayButton from "../paymentGateway/RazorpayButton";
 import "./Cart.css";
 import {
@@ -217,6 +219,10 @@ import {
 } from "../States";
 
 import { getToken } from "../utils";
+import Loader from "../loader";
+import RazorpayButton from "../paymentGateway/RazorpayButton";
+import CartItemsPreview from "../Components/Cart/CartItemsPreview/CartItemsPreview";
+import MessageBox from "../MessageBox";
 
 function GetItemsCart(params) {
   const [cartItems, setCartItems] = useRecoilState(cartItemsAdded);
@@ -224,10 +230,17 @@ function GetItemsCart(params) {
   const [payloader, setPayloader] = useRecoilState(cartPayloader);
   const [products, setProducts] = useRecoilState(productDetails);
   const [, setCartlength] = useRecoilState(CartLength);
+  const [loading , setLoading] = useState(false);
+  const [fetchError, setfetchError] = useState("");
+  const [removeItemError, setremoveItemError] = useState("");
+  const [removeCouponError, setremoveCouponError] = useState("");
+  const [applyCouponError, setapplyCouponError] = useState("");
+  const [couponCode, setcouponCode] = useState("")
+
 
   useEffect(() => {
     fetchCartItems();
-  }, [products]);
+  }, []);
 
   //fetching products in case user come directly to cart
   //if not, then recoil state product
@@ -254,6 +267,8 @@ function GetItemsCart(params) {
 
   //fetching Cart Items
   const fetchCartItems = async () => {
+    if(!cartItems)
+      setLoading(true);
     try {
       const response = await fetch("http://35.244.8.93:4000/api/users/cart", {
         method: "GET",
@@ -264,73 +279,168 @@ function GetItemsCart(params) {
       });
       const jsonResponse = await response.json();
       //navbar cart length issue
+      setLoading(false);
+      if(jsonResponse.flag===2)
+      {
+          setfetchError(jsonResponse.msg);
+      }
+      else{
       setCartlength(jsonResponse.cartItems.Items.length);
       setCartItems(jsonResponse.cartItems.Items);
       console.log(jsonResponse);
-      setPayloader(jsonResponse.cartItems);
+      setPayloader(jsonResponse.cartItems);}
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const handleSuccessPayment = async (payment_id, signature) => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://35.244.8.93:4000/api/users/cart/razorpay",
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: getToken(),
-  //         },
-  //       }
-  //     };
-  //     const postData = async (payment_id, order_id, amount, signature) => {
-  //       const item = {
-  //         payment_id: payment_id,
-  //         order_id: order_id,
-  //         payment_secret: "S&xd!rstpLw!+w#u$EDnY_K^=UCah-?EBncknj35",
-  //         amount: amount,
-  //         currency: "INR",
-  //         receipt: "FDSJKI",
-  //       };
-  //       try {
-  //         const response = await fetch(
-  //           "http://35.244.8.93:4000/api/users/cart/checkout",
-  //           {
-  //             method: "POST",
-  //             body: JSON.stringify(item),
-  //             headers: {
-  //               "x-razorpay-signature": signature,
-  //               "Content-Type": "application/json",
-  //               Authorization: getToken(),
-  //             },
-  //           }
-  //         );
-  //         const paymentRes2 = await response.json();
-  //         console.log("res2", paymentRes2);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     );
-  //     const paymentRes2 = await response.json();
-  //     console.log("res2", paymentRes2);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const removeItem = async (id) => {
+    try {
+        setLoading(true);
+      const response = await fetch(
+        `http://35.244.8.93:4000/api/users/cart/${id}/remove`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const removeItem = await response.json();
+      setLoading(false);
+      console.log("REMOVE ITEM ", removeItem);
+      if(removeItem.flag === 1)
+        fetchCartItems();
+      else
+       {
+         setremoveItemError(removeItem.msg);
+       }
+    } catch (error) {
+      console.log("REMOVE ITEM ERROR " + error);
+    }
+  };
+  
+  const applyCoupon = async (id, coupon) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://35.244.8.93:4000/api/users/cart/${id}?apply=${coupon}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const applyCoupon = await response.json();
+      setLoading(false);
+      if (applyCoupon.flag === 2) {
+        setapplyCouponError(applyCoupon.msg);
+      }else{
+            fetchCartItems()
+      }
+      console.log("COUPON ADDED", applyCoupon);
+    } catch (error) {
+      console.log("COUPON ADDED ERROR: " + error);
+    }
+  };
+
+  const removeCoupon = async (id, coupon) => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://35.244.8.93:4000/api/users/cart/${id}/removecoupon`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const removeCoupon = await response.json();
+      setLoading(false);
+      if (removeCoupon.flag === 2) {
+        setremoveCouponError(removeCoupon.msg);
+      }else{
+            fetchCartItems()
+      }
+      console.log("COUPON REMOVED", removeCoupon);
+    } catch (error) {
+      console.log("COUPON REMOVED ERROR: " + error);
+    }
+  };
+  
+
+  const handleSuccessPayment = async (payment_id, signature) => {
+    try {
+      const response = await fetch(
+        "http://35.244.8.93:4000/api/users/cart/razorpay",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const paymentRes = await response.json();
+      setPaymentResponse(paymentRes.details);
+      console.log(paymentResponse);
+      console.log(payment_id);
+      const item = {
+        payment_id: payment_id,
+        order_id: paymentRes.details.id,
+      };
+      console.log(item);
+      console.log(signature);
+      postData(
+        payment_id,
+        paymentRes.details.id,
+        paymentRes.details.amount,
+        signature
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const postData = async (payment_id, order_id, amount, signature) => {
+    const item = {
+      payment_id: payment_id,
+      order_id: order_id,
+      payment_secret: "S&xd!rstpLw!+w#u$EDnY_K^=UCah-?EBncknj35",
+      amount: amount,
+      currency: "INR",
+      receipt: "FDSJKI",
+    };
+    try {
+      const response = await fetch(
+        "http://35.244.8.93:4000/api/users/cart/checkout",
+        {
+          method: "POST",
+          body: JSON.stringify(item),
+          headers: {
+            "x-razorpay-signature": signature,
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const paymentRes2 = await response.json();
+      console.log("res2", paymentRes2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   return (
     <div>
       <div>
+        {loading && <Loader></Loader>}
         {/* heading banner */}
-        <header class="heading-banner text-white bgCover">
-          <div class="container holder">
-            <div class="align">
-              <h1>Cart Page</h1>
-            </div>
-          </div>
-        </header>
         {/* breadcrumb nav */}
         <nav class="breadcrumb-nav">
           <div class="container">
@@ -347,7 +457,14 @@ function GetItemsCart(params) {
           </div>
         </nav>
         {/* cart content block */}
+        {fetchError && <MessageBox variant="danger">{fetchError}</MessageBox>}
+        {applyCouponError && <MessageBox variant="danger">{applyCouponError}</MessageBox>}
+        {removeCouponError && <MessageBox variant="danger">{removeCouponError}</MessageBox>}
+        {removeItemError && <MessageBox variant="danger">{removeItemError}</MessageBox>}
+
+        {cartItems &&
         <section class="cart-content-block container">
+          {!cartItems.length && <h6> Empty Cart!!! Go to Marketplace and get some courses.</h6> }
           {/* cart form */}
           <form action="#" class="cart-form">
             <div class="table-wrap">
@@ -358,63 +475,75 @@ function GetItemsCart(params) {
                     <th>&nbsp;</th>
                     <th class="col01">Product</th>
                     <th>Price</th>
-                    <th>Apply Coupon</th>
+                    <th>Coupon</th>
                     <th>Discount</th>
                     <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <a href="#" class="btn-remove fas fa-times">
-                        <span class="sr-only">remove</span>
-                      </a>
-                    </td>
-                    <td data-title="Product" class="col01">
-                      <div>
-                        <div class="pro-name-wrap">
-                          <div class="alignleft no-shrink hidden-xs">
-                            <img
-                              src="http://placehold.it/45x50"
-                              alt="image description"
-                            />
-                          </div>
-                          <div class="descr-wrap">
-                            <h3 class="fw-normal">Wirebound Notebook</h3>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-title="Price">
-                      <span>
-                        <strong class="price element-block"> $65558.00</strong>
-                      </span>
-                    </td>
-                    <td data-title="Apply coupon">
-                      <div>
-                        <div className="quantity">
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Coupon Code"
-                          />
-                          <button className="apply-coupon">Apply</button>
-                          <button className="remove-coupon">Remove</button>
-                        </div>
-                      </div>
-                    </td>
-                    <td data-title="Discount">
-                      <span>
-                        <strong class="price element-block"> $68.00</strong>
-                      </span>
-                    </td>
-                    <td data-title="Total">
-                      <span>
-                        <strong class="element-block price"> $68.00</strong>
-                      </span>
-                    </td>
-                  </tr>
+                  {cartItems.map((item)=>(
 
+                              <tr>
+                              <td>
+                                <i href="#" class="btn-remove fas fa-times" onClick={() => removeItem(item.product_id)}>
+                                  <span class="sr-only">remove</span>
+                                </i>
+                              </td>
+                              <td data-title="Product" class="col01">
+                                <div>
+                                  <div class="pro-name-wrap">
+                                    <div class="alignleft no-shrink hidden-xs">
+                                      <img
+                                        src={item.image_url}
+                                        alt="image description"
+                                      />
+                                    </div>
+                                    <div class="descr-wrap">
+                                      <h3 class="fw-normal">{item.product_name}</h3>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td data-title="Price">
+                                <span>
+                                  <strong class="price element-block"> ₹{(item.price_before_coupon).toFixed(2)}</strong>
+                                </span>
+                              </td>
+                              {item.coupon_id ? <td data-title="Coupon Id">
+                                <div>
+                                  <div className="quantity">
+                                    Applied: {item.coupon_name}
+                                  </div>
+                                  <button className="remove-coupon1" onClick={() => removeCoupon(item.product_id)}>Remove Coupon</button>
+                                </div>
+                              </td>:
+                                <td data-title="Apply coupon">
+                                <div>
+                                  <div className="quantity">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      onChange={(e)=>setcouponCode(e.target.value)}
+                                      placeholder="Coupon Code"
+                                    />
+                                    <button className="apply-coupon" onClick={() => applyCoupon(item.product_id, couponCode)}>Apply</button>
+                                    <button className="remove-coupon"onClick={() => removeCoupon(item.product_id)}>Remove</button>
+                                  </div>
+                                </div>
+                                </td>
+                              }
+                                                              
+                              <td data-title="Discount">
+                                <span>
+                                  <strong class="price element-block"> ₹{(item.price_before_coupon - item.net_price).toFixed(2)}</strong>
+                                </span>
+                              </td>
+                              <td data-title="Total">
+                                <span>
+                                  <strong class="element-block price">₹{(item.net_price).toFixed(2)}</strong>
+                                </span>
+                              </td>
+                              </tr>))}
                   <tr>
                     <td colspan="2" class="text-right btn-actions">
                       <div>
@@ -422,7 +551,7 @@ function GetItemsCart(params) {
                           href="#"
                           class="btn btn-default font-lato fw-normal text-uppercase"
                         >
-                          Back to courses
+                          Back to Courses
                         </a>
                       </div>
                     </td>
@@ -440,35 +569,34 @@ function GetItemsCart(params) {
                       <tr>
                         <td class="font-lato fw-bold">Subtotal</td>
                         <td>
-                          <div class="price">£95.00</div>
+                          <div class="price">₹{(cartItems.reduce((a, curr) => a + (curr.price_before_coupon ? (curr.price_before_coupon) : 0), 0)).toFixed(2)}</div>
                         </td>
                       </tr>
                       <tr>
                         <td class="font-lato fw-bold">Discount</td>
                         <td>
-                          <div lass="price">£95.00</div>
+                          <div lass="price">₹{((cartItems.reduce((a, curr) => a + (curr.price_before_coupon ? (curr.price_before_coupon) : 0), 0)) - payloader.total_amt).toFixed(2) }</div>
                         </td>
                       </tr>
 
                       <tr>
                         <td>Total</td>
                         <td>
-                          <strong class="price">$105.00</strong>
+                          <strong class="price">₹{payloader.total_amt}</strong>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-warning btn-theme font-lato fw-bold text-uppercase element-block"
-                >
-                  Proceed to checkout
-                </button>
+               <RazorpayButton
+                  amount={payloader.total_amt * 100}
+                  order_id={paymentResponse.id}
+                  onSuccess={handleSuccessPayment}
+               />
               </div>
             </div>
           </form>
-        </section>
+        </section>}
       </div>
     </div>
   );

@@ -61,12 +61,14 @@
 import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
 
-import NewHome from "./Components/NewHome";
+import NewHome from "./Components/newHome"
 import NotFound from "./Components/404";
 import CourseDescription from "./Components/CourseDescription";
-
+import PurchasedProduct from './Components/Marketplace/PurchasedProduct'
 import { Route, Switch } from "react-router-dom";
 import GetItemsCart from "./Pages/GetItemsCart";
+import OrderHistory from "./Components/Orders/OrderHistory";
+import orderDetailsPage from "./Components/Orders/OrderDetails";
 // import './App.css';
 
 function App(props) {
@@ -143,7 +145,7 @@ function App(props) {
                         src="/images/logo-dark.png"
                         alt="studylms"
                       /> */}
-                      <img src="images/logo-dark.png" alt="studylms"></img>
+                      <img src="/images/logo-dark.png" alt="studylms"></img>
                     </a>
                   </div>
                 </div>
@@ -265,7 +267,10 @@ function App(props) {
           {/* intro block */}
           <Route exact path="/" component={NotFound} />
           <Switch>
-            <Route path="/cart" component={GetItemsCart} />
+		  	<Route exact path="/purchased" component={PurchasedProduct} />
+            <Route exact path="/cart" component={GetItemsCart} />
+			<Route exact path="/orders" component={OrderHistory} />
+			<Route exact path="/orders/:id/details" component={orderDetailsPage} />
             <Route path="/login" component={Login} />
             <Route exact path="/:id">
               <NewHome id="10" />
@@ -410,11 +415,11 @@ function App(props) {
         {/* back top of the page */}
         <span id="back-top" class="text-center fa fa-caret-up"></span>
         {/* loader of the page */}
-        <div id="loader" class="loader-holder">
+        {/* <div id="loader" class="loader-holder">
           <div class="block">
             <img src="/images/svg/hearts.svg" width="100" alt="loader" />
           </div>
-        </div>
+        </div> */}
       </div>
       <div class="popup-holder">
         <div id="popup1" class="lightbox-demo">

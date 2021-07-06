@@ -11379,6 +11379,9 @@ form .star-rating .customFormReset:checked + label {
   width: 150px;
 }
 
+.cart-data-table .price, .cart-data-table.table .price {
+  width: 150px;
+}
 
 .cart-data-table .coupon-wrap .form-control, .cart-data-table.table 
  .form-control {

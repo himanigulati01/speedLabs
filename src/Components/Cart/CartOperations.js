@@ -86,6 +86,8 @@ export const removeCoupon = async (id, coupon) => {
     console.log("COUPON REMOVED ERROR: " + error);
   }
 };
+
+
 export const applyCoupon = async (id, coupon) => {
   try {
     const response = await fetch(

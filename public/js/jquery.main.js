@@ -193,6 +193,6 @@ $(document).ready(function() {
 jQuery( window ).on( "load" , function() {
   "use strict";
 
-  jQuery( "#loader" ).delay( 600 ).fadeOut( 300 );
+  jQuery( "#loader" );
 
 }); 

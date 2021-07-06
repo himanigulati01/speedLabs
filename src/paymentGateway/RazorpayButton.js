@@ -1,5 +1,5 @@
 import React from "react";
-import "./RazorpayButton.css";
+// import "./RazorpayButton.css";
 
 function RazorpayButton(props) {
   // console.log(props.clientID);
@@ -7,7 +7,7 @@ function RazorpayButton(props) {
     key: "rzp_test_foKEivKbPBbsC3", // Enter the Key ID generated from the Dashboard
     amount: props.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     currency: "INR",
-    name: "AtranZ Shopping",
+    name: "SpeedLab",
     description: "Online Payment",
     order_id: props.order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     handler: function (response) {
@@ -44,8 +44,8 @@ function RazorpayButton(props) {
     e.preventDefault();
   };
   return (
-    <>
-      <button class="button" onClick={payOrderHandler}>
+        <>
+      {/* <button class="button" onClick={payOrderHandler}>
         <span class="button__text">Checkout</span>
         <svg class="button__svg" role="presentational" viewBox="0 0 600 600">
           <defs>
@@ -117,7 +117,13 @@ function RazorpayButton(props) {
             />
           </g>
         </svg>
-      </button>
+      </button> */}
+
+                <button
+                  type="submit"
+                  class="btn btn-warning btn-theme font-lato fw-bold text-uppercase element-block"
+                  onClick={payOrderHandler}
+                > Proceed to Checkout </button>
     </>
   );
 }
