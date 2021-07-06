@@ -12,12 +12,14 @@ code {
     monospace;
 } */
 
-
-.background_1920_280{
+.background_1920_280 {
   background-image: url("http://placehold.it/1920x280");
 }
 
-.background_1920_365{
-  background-image:url("http://placehold.it/1920x365");
+.background_1920_365 {
+  background-image: url("http://placehold.it/1920x365");
 }
 
+.background_1920_181 {
+  background-image: url("http://placehold.it/1920x181");
+}

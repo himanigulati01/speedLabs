@@ -1,0 +1,20 @@
+input {
+  padding-left: 10px;
+}
+
+.apply-coupon,
+.remove-coupon {
+  width: 75px;
+}
+
+.apply-coupon:hover {
+  background-color: #ffc000;
+  border-color: #ffc000;
+  color: white;
+}
+
+.remove-coupon:hover {
+  background-color: #d9534f;
+  border-color: #d9534f;
+  color: white;
+}
