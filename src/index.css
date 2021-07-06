@@ -21,3 +21,10 @@ code {
   background-image:url("http://placehold.it/1920x365");
 }
 
+.background_1920_181{
+  background-image: url("http://placehold.it/1920x181");
+}
+
+.margin-top{
+  margin-top:1400px;
+}

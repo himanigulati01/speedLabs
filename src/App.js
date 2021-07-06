@@ -62,6 +62,8 @@
 
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import newHome from './newHome';
+import GetItemsCart from "./Pages/GetItemsCart";
+import Login from "./Pages/Authentication/Login";
 
 // import './App.css';
 
@@ -72,7 +74,7 @@ function App() {
 	{/* main container of all the page elements */}
 	<div id="wrapper">
 		{/* header of the page */}
-		<header id="page-header" class="page-header-stick">
+		<header id="page-header">
 			{/* top bar */}
 			<div class="top-bar bg-dark text-gray">
 				<div class="container">
@@ -113,8 +115,9 @@ function App() {
 							{/* logo */}
 							<div class="logo">
 								<a href="home.html">
-									<img class="hidden-xs" src="/images/logo.png" alt="studylms"/>
-									<img class="hidden-sm hidden-md hidden-lg" src="/images/logo-dark.png" alt="studylms"/>
+									{/* <img class="hidden-xs" src="/images/logo.png" alt="studylms"/>
+									<img class="hidden-sm hidden-md hidden-lg" src="/images/logo-dark.png" alt="studylms"/> */}
+									<img src="images/logo-dark.png" alt="studylms"></img>
 								</a>
 							</div>
 						</div>
@@ -209,7 +212,10 @@ function App() {
 
 
 			<Switch>
-          <Route exact path="/newhome" component={newHome} />
+			<Route path="/login" exact component={Login} />
+			<Route exact path="/cart" component={GetItemsCart} />
+          	<Route exact path="/newhome" component={newHome} />
+		  
 
    		 </Switch>
 

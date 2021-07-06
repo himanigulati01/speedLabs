@@ -2516,13 +2516,13 @@ body .ui-tooltip {
   position: relative;
 }
 
-.quantity input[type=number]::-webkit-inner-spin-button,
-.quantity input[type=number]::-webkit-outer-spin-button {
+.quantity input[type=text]::-webkit-inner-spin-button,
+.quantity input[type=text]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.quantity input[type=number] {
+.quantity input[type=text] {
   -moz-appearance: textfield;
 }
 
@@ -11327,7 +11327,7 @@ form .star-rating .customFormReset:checked + label {
 }
 
 .cart-data-table, .cart-data-table.table {
-  table-layout: fixed;
+  /* table-layout: fixed; */
 }
 
 .cart-data-table thead, .cart-data-table.table thead {
@@ -11340,19 +11340,17 @@ form .star-rating .customFormReset:checked + label {
   border: 0;
 }
 
-.cart-data-table .col01 > div, .cart-data-table.table .col01 > div {
-  position: relative;
-}
+
 
 .cart-data-table .btn-remove, .cart-data-table.table .btn-remove {
-  position: absolute;
+  position: relative;
   top: 50%;
   color: #ccc;
   font-size: 14px;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  right: 5px;
+  right: 15px;
 }
 
 .cart-data-table .btn-remove:hover, .cart-data-table.table .btn-remove:hover {
@@ -11378,10 +11376,12 @@ form .star-rating .customFormReset:checked + label {
 }
 
 .cart-data-table .quantity, .cart-data-table.table .quantity {
-  width: 70px;
+  width: 150px;
 }
 
-.cart-data-table .coupon-wrap .form-control, .cart-data-table.table .coupon-wrap .form-control {
+
+.cart-data-table .coupon-wrap .form-control, .cart-data-table.table .
+ .form-control {
   width: 100%;
   margin-bottom: 10px;
 }
@@ -11392,7 +11392,7 @@ form .star-rating .customFormReset:checked + label {
 }
 
 /* ---------------------------------------------------------
- 120. Table cart total / .table-cart-total
+ 120. Table cart total / .table-cart-
  ---------------------------------------------------------*/
 .table-cart-total, .table-cart-total.table {
   border: 1px solid #e8e8e8;
