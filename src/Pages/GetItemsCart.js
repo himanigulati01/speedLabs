@@ -273,66 +273,52 @@ function GetItemsCart(params) {
     }
   };
 
-  const handleSuccessPayment = async (payment_id, signature) => {
-    try {
-      const response = await fetch(
-        "http://35.244.8.93:4000/api/users/cart/razorpay",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: getToken(),
-          },
-        }
-      );
-      const paymentRes = await response.json();
-      setPaymentResponse(paymentRes.details);
-      console.log(paymentResponse);
-      console.log(payment_id);
-      const item = {
-        payment_id: payment_id,
-        order_id: paymentRes.details.id,
-      };
-      console.log(item);
-      console.log(signature);
-      postData(
-        payment_id,
-        paymentRes.details.id,
-        paymentRes.details.amount,
-        signature
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const postData = async (payment_id, order_id, amount, signature) => {
-    const item = {
-      payment_id: payment_id,
-      order_id: order_id,
-      payment_secret: "S&xd!rstpLw!+w#u$EDnY_K^=UCah-?EBncknj35",
-      amount: amount,
-      currency: "INR",
-      receipt: "FDSJKI",
-    };
-    try {
-      const response = await fetch(
-        "http://35.244.8.93:4000/api/users/cart/checkout",
-        {
-          method: "POST",
-          body: JSON.stringify(item),
-          headers: {
-            "x-razorpay-signature": signature,
-            "Content-Type": "application/json",
-            Authorization: getToken(),
-          },
-        }
-      );
-      const paymentRes2 = await response.json();
-      console.log("res2", paymentRes2);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleSuccessPayment = async (payment_id, signature) => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://35.244.8.93:4000/api/users/cart/razorpay",
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: getToken(),
+  //         },
+  //       }
+  //     };
+  //     const postData = async (payment_id, order_id, amount, signature) => {
+  //       const item = {
+  //         payment_id: payment_id,
+  //         order_id: order_id,
+  //         payment_secret: "S&xd!rstpLw!+w#u$EDnY_K^=UCah-?EBncknj35",
+  //         amount: amount,
+  //         currency: "INR",
+  //         receipt: "FDSJKI",
+  //       };
+  //       try {
+  //         const response = await fetch(
+  //           "http://35.244.8.93:4000/api/users/cart/checkout",
+  //           {
+  //             method: "POST",
+  //             body: JSON.stringify(item),
+  //             headers: {
+  //               "x-razorpay-signature": signature,
+  //               "Content-Type": "application/json",
+  //               Authorization: getToken(),
+  //             },
+  //           }
+  //         );
+  //         const paymentRes2 = await response.json();
+  //         console.log("res2", paymentRes2);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     );
+  //     const paymentRes2 = await response.json();
+  //     console.log("res2", paymentRes2);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
