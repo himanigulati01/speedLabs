@@ -72,7 +72,7 @@ function SignIn(props) {
       setInstituteId(loginCredentials.details.user_inst_id);
       setUserDetails(loginCredentials.details);
       setIsLogged(true);
-      props.history.push(`/?institute=${getInstituteId()}`);
+      props.history.push(`/${getInstituteId()}`);
     } catch (error) {
       console.log("Login.js" + error);
     }

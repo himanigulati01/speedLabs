@@ -11,6 +11,7 @@ function NewHome(props) {
   const [products, setProducts] = useRecoilState(productDetails);
   const [loading, setLoading] = useState(false);
   const[prodError, setprodError] = useState("");
+  
   const fetchProducts = async () => {
     try {
       if(!products)
@@ -65,7 +66,7 @@ function NewHome(props) {
                   <div class="anim delay2">
                     <div class="btns-wrap">
                       <a
-                        href="/course-list"
+                        href={"/course-list/"+props.match.params.id}
                         class="btn btn-warning btn-theme text-uppercase"
                       >
                         Our Courses

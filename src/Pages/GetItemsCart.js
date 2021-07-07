@@ -223,8 +223,9 @@ import Loader from "../loader";
 import RazorpayButton from "../paymentGateway/RazorpayButton";
 import CartItemsPreview from "../Components/Cart/CartItemsPreview/CartItemsPreview";
 import MessageBox from "../MessageBox";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-function GetItemsCart(params) {
+function GetItemsCart(props) {
   const [cartItems, setCartItems] = useRecoilState(cartItemsAdded);
   const [paymentResponse, setPaymentResponse] = useRecoilState(paymentResp);
   const [payloader, setPayloader] = useRecoilState(cartPayloader);
@@ -236,6 +237,7 @@ function GetItemsCart(params) {
   const [removeCouponError, setremoveCouponError] = useState("");
   const [applyCouponError, setapplyCouponError] = useState("");
   const [couponCode, setcouponCode] = useState("")
+  const [payError, setpayError] = useState("");
 
 
   useEffect(() => {
@@ -433,8 +435,14 @@ function GetItemsCart(params) {
         }
       );
       const paymentRes2 = await response.json();
+      if(paymentRes2.flag === 2)
+        setpayError(paymentRes2.msg);
+      else{
+          props.history.push("/orders")
+      }
       console.log("res2", paymentRes2);
     } catch (error) {
+      setpayError(error.message)
       console.log(error);
     }
   };
@@ -465,6 +473,7 @@ function GetItemsCart(params) {
         {applyCouponError && <MessageBox variant="danger">{applyCouponError}</MessageBox>}
         {removeCouponError && <MessageBox variant="danger">{removeCouponError}</MessageBox>}
         {removeItemError && <MessageBox variant="danger">{removeItemError}</MessageBox>}
+        {payError && <MessageBox variant="danger">{payError}</MessageBox>}
 
         {cartItems &&
         <section class="cart-content-block container">

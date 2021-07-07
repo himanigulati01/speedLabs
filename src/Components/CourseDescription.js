@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { addToCart } from "./Cart/CartOperations";
+import Loader from "../loader";
+import MessageBox from "../MessageBox";
+import { getToken } from "../utils";
+// import { addToCart } from "./Cart/CartOperations";
+
 function CourseDescription(props) {
   //const [catId, setCatId] = useRecoilState(categoryId);
   const [productDetail, setProductDetail] = useState({});
   const [contentList, setContentList] = useState([]);
+  const [addCartError, setaddCartError] = useState("");
+  const [loading , setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState("");
+
+
   console.log(props);
   useEffect(() => fetchProductDetail(), []);
   const fetchProductDetail = async () => {
     try {
+      if(!productDetail)
+          setLoading(true);
       const response = await fetch(
         `http://35.244.8.93:4000/api/users/product/${props.match.params.id}?institute=${props.match.params.id2}`,
         {
@@ -40,11 +51,42 @@ function CourseDescription(props) {
       );
       //setContentList(productResponse.details.content, productResponse.details.id);
       setProductDetail(productResponse.details);
+      setLoading(false);
       console.log(productResponse.details);
     } catch (error) {
+      setFetchError(error.message);
       console.log("productDesc.js" + error);
     }
   };
+
+
+  const addToCart = async (productId) => {
+    try {
+      setLoading(true);
+      const item = { product_id: productId };
+      const response = await fetch(
+        "http://35.244.8.93:4000/api/users/cart/addtocart",
+        {
+          method: "POST",
+          body: JSON.stringify(item),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: getToken(),
+          },
+        }
+      );
+      const addToCartResponse = await response.json();
+      setLoading(false);
+      if(addToCartResponse.flag===1)
+          props.history.push("/cart")
+      else
+          setaddCartError(addToCartResponse.msg);
+      console.log(addToCartResponse);
+    } catch (error) {
+      console.log("AddtoCart " + error);
+    }
+  };
+
   console.log(contentList);
   console.log(productDetail);
   return (
@@ -59,7 +101,7 @@ function CourseDescription(props) {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="contact.html">Course</a>
+              <a href="/">Course</a>
             </li>
             <li class="active"> {productDetail.product_name}</li>
           </ol>
@@ -67,6 +109,9 @@ function CourseDescription(props) {
       </nav>
       {/* two columns */}
       <div id="two-columns" class="container">
+        {loading && <Loader></Loader>}
+        {fetchError && <MessageBox variant="danger">{fetchError}</MessageBox>}
+        {addCartError && <MessageBox variant="danger">{addCartError}</MessageBox>}
         <div class="row">
           {/* content */}
           <article id="content" class="col-xs-12 col-md-9">
@@ -152,7 +197,7 @@ function CourseDescription(props) {
             {contentList?.map((content) => (
               <section class="sectionRow">
                 <h2 class="h6 text-uppercase fw-semi rowHeading">
-                  Section {content[0]}
+                  Section: {content[0]}
                 </h2>
                 {/* sectionRowPanelGroup */}
                 {content[1].map((cont) => (

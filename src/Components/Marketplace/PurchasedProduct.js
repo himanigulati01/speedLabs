@@ -224,13 +224,13 @@ function PurchasedProduct(params) {
 							<img src={product.image_url} alt="image description"/>
 						</div>
 						<div class="description-wrap">
-							<h3 class="list-heading"><a href="event-sigle.html">{product.product_name}</a></h3>
+							<h3 class="list-heading"><a href={"/"+product.id+"/description/"+product.issued_by}>{product.product_name}</a></h3>
 							<h5>Price: {product.discount ? <strike>₹{product.price}</strike>:<></>}
 							&nbsp;&nbsp;₹{parseFloat(product.price - (product.discount*product.price)/100).toFixed(2)}</h5>
               <h5>OverView: </h5>
               <p>{product.short_description}</p>
 
-							<a href="event-sigle.html" class="btn btn-default text-uppercase">Details and Contents</a>
+							<a href={"/"+product.id+"/description/"+product.issued_by} class="btn btn-default text-uppercase">Details and Contents</a>
 						</div>
 					</li>
         ))}

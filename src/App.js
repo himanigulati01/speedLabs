@@ -135,7 +135,7 @@ function App(props) {
                 <div class="col-xs-6 col-sm-3">
                   {/* logo */}
                   <div>
-                    <a href="/10">
+                    <a href="">
                       {/* <img
                         class="hidden-xs"
                         src="/images/logo.png"
@@ -176,10 +176,7 @@ function App(props) {
                       <ul class="nav navbar-nav navbar-right main-navigation text-uppercase font-lato">
                         <li class="dropdown">
                           <a
-                            href="/id"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            role="button"
+                            href="/10"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
@@ -189,9 +186,6 @@ function App(props) {
                         <li class="dropdown">
                           <a
                             href="/marketplace"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            role="button"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
@@ -201,10 +195,7 @@ function App(props) {
 
                         <li class="dropdown">
                           <a
-                            href="/"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            role="button"
+                            href="/orders"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
@@ -213,10 +204,7 @@ function App(props) {
                         </li>
                         <li class="dropdown">
                           <a
-                            href="/"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown"
-                            role="button"
+                            href="/cart"
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
@@ -274,11 +262,12 @@ function App(props) {
               path="/:id/description/:id2"
               component={CourseDescription}
             />
+            <Route path="/course-list/:id" component={Courselist} />
 		  	    <Route exact path="/purchased" component={PurchasedProduct} />
             <Route exact path="/cart" component={GetItemsCart} />
             <Route exact path="/orders" component={OrderHistory} />
             <Route exact path="/orders/:id/details" component={orderDetailsPage} />
-            <Route path="/course-list/:id" component={Courselist} />
+            
             <Route path="/login" component={Login} />
             <Route path="/:id">
               <NewHome />
