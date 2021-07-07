@@ -22,7 +22,7 @@
 .price-box-column:hover .icn-wrap,
 .price-box-column.active .icn-wrap,
 .price-box-column:before {
-  background-color: #ffc000; }
+  background-color: #a862dd; }
 
 .upcoming-events-list .date,
 .testimonial-quote h5.text-yellow,
@@ -45,7 +45,7 @@
 .intro-aside h2 .clr,
 .become-aside-block .text-bright,
 .ticketsInfoAside .comming-timer .countdown-row .countdown-section .countdown-amount {
-  color: #ffc000; }
+  color: #a862dd; }
 
 .categories-list > li.active > a,
 .categories-list > li > a:hover,
@@ -55,4 +55,4 @@
 .topics-data-table.table thead tr,
 .table.forum-data-table thead tr,
 .logo-wrap > a:hover:after {
-  border-color: #ffc000; }
+  border-color: #a862dd; }

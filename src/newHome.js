@@ -111,6 +111,7 @@ function newHome(params) {
 				<div class="row">
 					{/* popular posts slider */}
 					<div class="slider popular-posts-slider">
+						
 						<div>
 							<div class="col-xs-12">
 								{/* popular post */}
@@ -154,6 +155,8 @@ function newHome(params) {
 								</article>
 							</div>
 						</div>
+
+
 						<div>
 							<div class="col-xs-12">
 								{/* popular post */}

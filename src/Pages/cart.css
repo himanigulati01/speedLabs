@@ -4,12 +4,13 @@ input {
 
 .apply-coupon,
 .remove-coupon {
-  width: 75px;
+  width: 120px;
+  font-size: smaller;
 }
 
 .apply-coupon:hover {
-  background-color: #ffc000;
-  border-color: #ffc000;
+  background-color: #a862dd;
+  border-color: #a862dd;
   color: white;
 }
 
@@ -19,7 +20,7 @@ input {
   color: white;
 }
 
-.quantity{
+.green{
     font-size: smaller;
     color:green;
 }

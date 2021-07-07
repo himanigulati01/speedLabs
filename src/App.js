@@ -69,6 +69,7 @@ import { Route, Switch } from "react-router-dom";
 import GetItemsCart from "./Pages/GetItemsCart";
 import OrderHistory from "./Components/Orders/OrderHistory";
 import orderDetailsPage from "./Components/Orders/OrderDetails";
+import Courselist from "./Components/Courselist";
 // import './App.css';
 
 function App(props) {
@@ -92,7 +93,7 @@ function App(props) {
                           Call :
                         </strong>
                         <strong class="dd element-block hd-phone">
-                          +(61) 123 456 7890
+                        1800-419-8902 
                         </strong>
                         <i class="fas fa-phone-square hd-up-phone hidden-sm hidden-md hidden-lg">
                           <span class="sr-only">phone</span>
@@ -100,12 +101,12 @@ function App(props) {
                       </a>
                     </li>
                     <li>
-                      <a href="mailto:&#069;&#120;&#097;&#109;&#112;&#108;&#101;&#064;&#100;&#111;&#109;&#097;&#105;&#110;&#046;&#099;&#111;&#109;">
+                      <a href="mailto:info@speedlabs.in">
                         <strong class="dt element-block text-capitalize hd-phone">
                           Email :
                         </strong>
                         <strong class="dd element-block hd-phone">
-                          &#069;&#120;&#097;&#109;&#112;&#108;&#101;&#064;&#100;&#111;&#109;&#097;&#105;&#110;&#046;&#099;&#111;&#109;
+                          info@speedlabs.in
                         </strong>
                         <i class="fas fa-envelope-square hd-up-phone hidden-sm hidden-md hidden-lg">
                           <span class="sr-only">email</span>
@@ -133,8 +134,8 @@ function App(props) {
               <div class="row">
                 <div class="col-xs-6 col-sm-3">
                   {/* logo */}
-                  <div class="logo">
-                    <a href="/id">
+                  <div>
+                    <a href="/10">
                       {/* <img
                         class="hidden-xs"
                         src="/images/logo.png"
@@ -145,7 +146,7 @@ function App(props) {
                         src="/images/logo-dark.png"
                         alt="studylms"
                       /> */}
-                      <img src="/images/logo-dark.png" alt="studylms"></img>
+                      <img src="/images/speedlabs-new-logo.png" id="speedlab-logo" alt="speedlabs"></img>
                     </a>
                   </div>
                 </div>
@@ -223,7 +224,7 @@ function App(props) {
                           </a>
                         </li>
                         <li>
-                          <a href="contact.html">coNTACT</a>
+                          <a href="/purchased">My Courses</a>
                         </li>
                       </ul>
                     </div>
@@ -267,33 +268,35 @@ function App(props) {
           {/* intro block */}
           <Route exact path="/" component={NotFound} />
           <Switch>
-		  	<Route exact path="/purchased" component={PurchasedProduct} />
+            
+          <Route
+              exact
+              path="/:id/description/:id2"
+              component={CourseDescription}
+            />
+		  	    <Route exact path="/purchased" component={PurchasedProduct} />
             <Route exact path="/cart" component={GetItemsCart} />
-			<Route exact path="/orders" component={OrderHistory} />
-			<Route exact path="/orders/:id/details" component={orderDetailsPage} />
+            <Route exact path="/orders" component={OrderHistory} />
+            <Route exact path="/orders/:id/details" component={orderDetailsPage} />
+            <Route path="/course-list/:id" component={Courselist} />
             <Route path="/login" component={Login} />
-            <Route exact path="/:id">
-              <NewHome id="10" />
+            <Route path="/:id">
+              <NewHome />
             </Route>
             {/* <Route exact path="/:id/courses" component={Courses} /> */}
             <Route exact path="/register" component={Register} />
 
-            <Route
-              exact
-              path="/:id/description/10"
-              component={CourseDescription}
-            />
           </Switch>
         </main>
         {/* footer area container */}
-        <div class="footer-area bg-dark text-gray">
+        <div class="footer-area bg-dark text-white">
           {/* aside */}
           <aside class="aside container">
             <div class="row">
               <div class="col-xs-12 col-sm-6 col-md-3 col">
                 <div class="logo">
                   <a href="/id">
-                    <img src="/images/logo.png" alt="studyLMS" />
+                    <img src="/images/speedlabs-new-logo.png" id="speedlab-logo" alt="speedlabs" />
                   </a>
                 </div>
                 <p>

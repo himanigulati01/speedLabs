@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import Loader from "../loader";
+import MessageBox from "../MessageBox";
 import { productDetails } from "../States";
 import CourseView from "./CourseView";
 
 function NewHome(props) {
+  console.log(props.match.params.id)
   const [products, setProducts] = useRecoilState(productDetails);
+  const [loading, setLoading] = useState(false);
+  const[prodError, setprodError] = useState("");
   const fetchProducts = async () => {
     try {
+      if(!products)
+        setLoading(true);
       const response = await fetch(
-        `http://35.244.8.93:4000/api/users/product/marketplace?institute=${props.id}`,
+        `http://35.244.8.93:4000/api/users/product/marketplace?institute=${props.match.params.id}`,
         {
           method: "GET",
           headers: {
@@ -18,47 +25,47 @@ function NewHome(props) {
         }
       );
       const productResponse = await response.json();
-
       console.log(response);
       console.log(productResponse.products);
       setProducts(productResponse.products);
+      setLoading(false);
     } catch (error) {
+        setprodError(error.message)
       console.log("Marketplace" + error);
     }
   };
-
   useEffect(() => fetchProducts(), []);
-
   const data = products.map(({ ...rest }) => {
-    return <CourseView key={rest.id} {...rest} />;
+    return <CourseView key={rest.id} {...rest} id2={props.match.params.id} />;
   });
   return (
     <>
       <section class="intro-block">
+        {loading && <Loader></Loader>}
         <div class="slider fade-slider">
           <div>
             {/* intro block slide */}
             <article
-              class="intro-block-slide overlay bg-cover"
+              class="intro-block-slide overlay bg-cover bg-banner"
               background-image="url(http://placehold.it/1920x823)"
             >
               <div class="align-wrap container">
                 <div class="align">
                   <div class="anim">
                     <h1 class="intro-block-heading">
-                      Education &amp; Training Organization
+                    Practice beats talent &amp; when talent doesn’t practice
                     </h1>
                   </div>
                   <div class="anim delay1">
                     <p>
-                      We offer the most complete course pakage in the country,
-                      for the research, design and development of Education.
+                    Online adaptive practice at student’s learning pace,
+                     along with analysis and improvement plan can boost results significantly
                     </p>
                   </div>
                   <div class="anim delay2">
                     <div class="btns-wrap">
                       <a
-                        href="courses-list.html"
+                        href="/course-list"
                         class="btn btn-warning btn-theme text-uppercase"
                       >
                         Our Courses
@@ -83,7 +90,7 @@ function NewHome(props) {
                 />
               </span>
               <div class="description">
-                <h2 class="features-aside-heading">World’d Best Instructors</h2>
+                <h2 class="features-aside-heading">World'd Best Instructors</h2>
               </div>
             </a>
             <a href="#" class="col">
@@ -121,14 +128,20 @@ function NewHome(props) {
       <section class="popular-posts-block container">
         <header class="popular-posts-head">
           <h2 class="popular-head-heading">Courses</h2>
+          {prodError && <MessageBox variant="danger">{prodError}</MessageBox>}
         </header>
-
         <div class="row">
           {/* popular posts slider */}
-          <div class="slider popular-posts-slider">{data}</div>
-        </div>
-      </section>
+          <div className="slider popular-posts-slider">
+            {/* {products && products.map((product)=>( */}
 
+                 {data}
+            {/* ))} */}
+
+            
+            </div>
+						</div>
+      </section>
       {/* categories aside */}
       <aside class="bg-cover categories-aside text-center background_1920_365">
         <div class="container holder">
@@ -262,7 +275,7 @@ function NewHome(props) {
           <div class="col-xs-12 col-md-4 col text-center">
             <div class="limit-counter">
               <strong class="title element-block fw-normal">
-                It’s limited seating! Hurry up
+                It's limited seating! Hurry up
               </strong>
               <div id="defaultCountdown" class="comming-timer"></div>
             </div>
@@ -284,5 +297,4 @@ function NewHome(props) {
     </>
   );
 }
-
 export default withRouter(NewHome);

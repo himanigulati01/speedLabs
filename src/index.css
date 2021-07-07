@@ -23,3 +23,16 @@ code {
 .background_1920_181 {
   background-image: url("http://placehold.it/1920x181");
 }
+
+#speedlab-logo{
+  height:60px;
+}
+
+.bg-banner{
+  background-image: "/images/pbtp-institute.png";
+}
+
+.add-cart-btn{
+  width:200px;
+  margin-bottom: 20px;
+}

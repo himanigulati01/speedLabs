@@ -290,6 +290,7 @@ function GetItemsCart(params) {
       console.log(jsonResponse);
       setPayloader(jsonResponse.cartItems);}
     } catch (error) {
+      setfetchError(error.message);
       console.log(error);
     }
   };
@@ -317,6 +318,7 @@ function GetItemsCart(params) {
          setremoveItemError(removeItem.msg);
        }
     } catch (error) {
+      setremoveItemError(error.message);
       console.log("REMOVE ITEM ERROR " + error);
     }
   };
@@ -343,6 +345,7 @@ function GetItemsCart(params) {
       }
       console.log("COUPON ADDED", applyCoupon);
     } catch (error) {
+      setapplyCouponError(error.message);
       console.log("COUPON ADDED ERROR: " + error);
     }
   };
@@ -369,6 +372,7 @@ function GetItemsCart(params) {
       }
       console.log("COUPON REMOVED", removeCoupon);
     } catch (error) {
+      setremoveCouponError(error.message);
       console.log("COUPON REMOVED ERROR: " + error);
     }
   };
@@ -511,13 +515,13 @@ function GetItemsCart(params) {
                               </td>
                               {item.coupon_id ? <td data-title="Coupon Id">
                                 <div>
-                                  <div className="quantity">
+                                  <div className="quantity green">
                                     Applied: {item.coupon_name}
                                   </div>
                                   <button className="remove-coupon1" onClick={() => removeCoupon(item.product_id)}>Remove Coupon</button>
                                 </div>
                               </td>:
-                                <td data-title="Apply coupon">
+                                <td data-title="Coupon">
                                 <div>
                                   <div className="quantity">
                                     <input
@@ -526,8 +530,7 @@ function GetItemsCart(params) {
                                       onChange={(e)=>setcouponCode(e.target.value)}
                                       placeholder="Coupon Code"
                                     />
-                                    <button className="apply-coupon" onClick={() => applyCoupon(item.product_id, couponCode)}>Apply</button>
-                                    <button className="remove-coupon"onClick={() => removeCoupon(item.product_id)}>Remove</button>
+                                    <button className="apply-coupon" onClick={() => applyCoupon(item.product_id, couponCode)}>Apply Coupon</button>
                                   </div>
                                 </div>
                                 </td>

@@ -1,9 +1,8 @@
 import React from "react";
-
 function CourseView(props) {
   return (
     <div>
-      <div class="col-xs-12">
+      <div className="col-xs-12 col-lg-12 col-md-12">
         {/* popular post */}
         <article class="popular-post">
           <div class="aligncenter">
@@ -15,9 +14,8 @@ function CourseView(props) {
             </strong>
           </div>
           <h3 class="post-heading">
-            <a href={`/${props.id}/description/10`}>{props.product_name}</a>
+          <a href={`/${props.id}/description/${props.id2}`}>{props.product_name}</a>
           </h3>
-
           <div class="post-author">
             <h4 class="author-heading">
               <a href="instructor-single.html">{props.creator_name}</a>
@@ -33,14 +31,14 @@ function CourseView(props) {
                   <strong class="text fw-normal">{props.tot_students}</strong>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#">
                   <span class="fas icn no-shrink fa-comments">
                     <span class="sr-only">comments</span>
                   </span>
                   <strong class="text fw-normal">10</strong>
                 </a>
-              </li>
+              </li> */}
             </ul>
             <ul class="star-rating list-unstyled">
               <li>
@@ -75,5 +73,4 @@ function CourseView(props) {
     </div>
   );
 }
-
 export default CourseView;

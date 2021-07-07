@@ -17,7 +17,6 @@ function RazorpayButton(props) {
         response.razorpay_signature
       );
       // alert(response.razorpay_order_id);
-      alert(response.razorpay_signature);
     },
     // prefill: {
     //   name: String(props.user.name),
