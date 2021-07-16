@@ -61,16 +61,17 @@
 import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
 
-import NewHome from "./Components/newHome"
+import NewHome from "./Components/newHome";
 import NotFound from "./Components/404";
 import CourseDescription from "./Components/CourseDescription";
-import PurchasedProduct from './Components/Marketplace/PurchasedProduct'
+import PurchasedProduct from "./Components/Marketplace/PurchasedProduct";
 import { Route, Switch } from "react-router-dom";
 import GetItemsCart from "./Pages/GetItemsCart";
 import OrderHistory from "./Components/Orders/OrderHistory";
 import orderDetailsPage from "./Components/Orders/OrderDetails";
 import Courselist from "./Components/Courselist";
 // import './App.css';
+import Header from "./Components/Header";
 
 function App(props) {
   console.log(props);
@@ -79,202 +80,33 @@ function App(props) {
       {/* main container of all the page elements */}
       <div id="wrapper">
         {/* header of the page */}
-        <header id="page-header">
-          {/* top bar */}
-          <div class="top-bar bg-dark text-gray">
-            <div class="container">
-              <div class="row top-bar-holder">
-                <div class="col-xs-9 col">
-                  {/* bar links */}
-                  <ul class="font-lato list-unstyled bar-links">
-                    <li>
-                      <a href="tel:+611234567890">
-                        <strong class="dt element-block text-capitalize hd-phone">
-                          Call :
-                        </strong>
-                        <strong class="dd element-block hd-phone">
-                        1800-419-8902 
-                        </strong>
-                        <i class="fas fa-phone-square hd-up-phone hidden-sm hidden-md hidden-lg">
-                          <span class="sr-only">phone</span>
-                        </i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="mailto:info@speedlabs.in">
-                        <strong class="dt element-block text-capitalize hd-phone">
-                          Email :
-                        </strong>
-                        <strong class="dd element-block hd-phone">
-                          info@speedlabs.in
-                        </strong>
-                        <i class="fas fa-envelope-square hd-up-phone hidden-sm hidden-md hidden-lg">
-                          <span class="sr-only">email</span>
-                        </i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-xs-3 col justify-end">
-                  {/* user links */}
-                  <ul class="list-unstyled user-links fw-bold font-lato">
-                    <li>
-                      {/* <a href="/login" class="lightbox"> */}
-                      <a href="/login">Login</a> <span class="sep">|</span>{" "}
-                      <a href="/register">Register</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* header holder */}
-          <div class="header-holder">
-            <div class="container">
-              <div class="row">
-                <div class="col-xs-6 col-sm-3">
-                  {/* logo */}
-                  <div>
-                    <a href="">
-                      {/* <img
-                        class="hidden-xs"
-                        src="/images/logo.png"
-                        alt="studylms"
-                      />
-                      <img
-                        class="hidden-sm hidden-md hidden-lg"
-                        src="/images/logo-dark.png"
-                        alt="studylms"
-                      /> */}
-                      <img src="/images/speedlabs-new-logo.png" id="speedlab-logo" alt="speedlabs"></img>
-                    </a>
-                  </div>
-                </div>
-                <div class="col-xs-6 col-sm-9 static-block">
-                  {/* nav */}
-                  <nav id="nav" class="navbar navbar-default">
-                    <div class="navbar-header">
-                      <button
-                        type="button"
-                        class="navbar-toggle collapsed"
-                        data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1"
-                        aria-expanded="false"
-                      >
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                    </div>
-                    {/* navbar collapse */}
-                    <div
-                      class="collapse navbar-collapse"
-                      id="bs-example-navbar-collapse-1"
-                    >
-                      {/* main navigation */}
-                      <ul class="nav navbar-nav navbar-right main-navigation text-uppercase font-lato">
-                        <li class="dropdown">
-                          <a
-                            href="/10"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            home
-                          </a>
-                        </li>
-                        <li class="dropdown">
-                          <a
-                            href="/marketplace"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            Courses
-                          </a>
-                        </li>
-
-                        <li class="dropdown">
-                          <a
-                            href="/orders"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            Orders
-                          </a>
-                        </li>
-                        <li class="dropdown">
-                          <a
-                            href="/cart"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            Cart
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/purchased">My Courses</a>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* navbar form */}
-                    <form
-                      action="#"
-                      class="navbar-form navbar-search-form navbar-right"
-                    >
-                      <a
-                        class="fas fa-search search-opener"
-                        role="button"
-                        data-toggle="collapse"
-                        href="#searchCollapse"
-                        aria-expanded="false"
-                        aria-controls="searchCollapse"
-                      >
-                        <span class="sr-only">search opener</span>
-                      </a>
-                      {/* search collapse */}
-                      <div class="collapse search-collapse" id="searchCollapse">
-                        <div class="form-group">
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search &hellip;"
-                          />
-                          <button type="button" class="fas fa-search btn">
-                            <span class="sr-only">search</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </nav>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
         {/* contain main informative part of the site */}
+        <Header />
         <main id="main">
           {/* intro block */}
           <Route exact path="/" component={NotFound} />
           <Switch>
-            
-          <Route
+            <Route
               exact
               path="/:id/description/:id2"
               component={CourseDescription}
             />
             <Route path="/course-list/:id" component={Courselist} />
-		  	    <Route exact path="/purchased" component={PurchasedProduct} />
+            <Route exact path="/purchased" component={PurchasedProduct} />
             <Route exact path="/cart" component={GetItemsCart} />
             <Route exact path="/orders" component={OrderHistory} />
-            <Route exact path="/orders/:id/details" component={orderDetailsPage} />
-            
+            <Route
+              exact
+              path="/orders/:id/details"
+              component={orderDetailsPage}
+            />
+
             <Route path="/login" component={Login} />
             <Route path="/:id">
               <NewHome />
             </Route>
             {/* <Route exact path="/:id/courses" component={Courses} /> */}
             <Route exact path="/register" component={Register} />
-
           </Switch>
         </main>
         {/* footer area container */}
@@ -285,7 +117,11 @@ function App(props) {
               <div class="col-xs-12 col-sm-6 col-md-3 col">
                 <div class="logo">
                   <a href="/id">
-                    <img src="/images/speedlabs-new-logo.png" id="speedlab-logo" alt="speedlabs" />
+                    <img
+                      src="/images/speedlabs-new-logo.png"
+                      id="speedlab-logo"
+                      alt="speedlabs"
+                    />
                   </a>
                 </div>
                 <p>

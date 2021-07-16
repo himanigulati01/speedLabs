@@ -1,10 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import { getToken } from "../utils";
 function CourseView(props) {
-
-  const history = useHistory();
-  
   const addToCart = async (productId) => {
     try {
       const item = { product_id: productId };
@@ -20,8 +17,7 @@ function CourseView(props) {
         }
       );
       const addToCartResponse = await response.json();
-      if(addToCartResponse.flag===1)
-          alert("Items added to cart");
+      if (addToCartResponse.flag === 1) alert("Items added to cart");
       console.log(addToCartResponse);
     } catch (error) {
       console.log("AddtoCart " + error);
@@ -30,7 +26,7 @@ function CourseView(props) {
 
   return (
     <div>
-      <div className="col-xs-12 col-lg-12 col-md-12">
+      <div class="col-xs-12">
         {/* popular post */}
         <article class="popular-post">
           <div class="aligncenter">
@@ -42,7 +38,9 @@ function CourseView(props) {
             </strong>
           </div>
           <h3 class="post-heading">
-          <a href={`/${props.id}/description/${props.id2}`}>{props.product_name}</a>
+            <a href={`/${props.id}/description/${props.id2}`}>
+              {props.product_name}
+            </a>
           </h3>
           <div class="post-author">
             <h4 class="author-heading">
@@ -59,9 +57,6 @@ function CourseView(props) {
                   <strong class="text fw-normal">{props.tot_students}</strong>
                 </a>
               </li> */}
-              <li>
-                
-              </li>
 
               {/* <li>
                 <a href="#">
@@ -72,16 +67,15 @@ function CourseView(props) {
                 </a>
               </li> */}
               <li>
-              <div class="bookmarkCol text-right">
-                <a
-                  onClick={()=>addToCart(props.id)}
-                  class="btn btn-theme btn-warning  text-uppercase fw-bold"
-                >
-                  Add to Cart
-                </a>
-              </div>
+                <div class="bookmarkCol text-right">
+                  <a
+                    onClick={() => addToCart(props.id)}
+                    class="btn btn-theme btn-warning  text-uppercase fw-bold"
+                  >
+                    Add to Cart
+                  </a>
+                </div>
               </li>
-
             </ul>
             <ul class="star-rating list-unstyled">
               <li>
@@ -111,7 +105,6 @@ function CourseView(props) {
               </li>
             </ul>
           </footer>
-
         </article>
       </div>
     </div>

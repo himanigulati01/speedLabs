@@ -3,19 +3,19 @@ import { withRouter } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import Loader from "../loader";
 import MessageBox from "../MessageBox";
-import { productDetails } from "../States";
+import { inst_id, productDetails } from "../States";
 import CourseView from "./CourseView";
 
 function NewHome(props) {
-  console.log(props.match.params.id)
+  console.log(props.match.params.id);
   const [products, setProducts] = useRecoilState(productDetails);
   const [loading, setLoading] = useState(false);
-  const[prodError, setprodError] = useState("");
-  
+  const [prodError, setprodError] = useState("");
+  const [instId, setInstId] = useRecoilState(inst_id);
+  console.log(instId);
   const fetchProducts = async () => {
     try {
-      if(!products)
-        setLoading(true);
+      if (!products) setLoading(true);
       const response = await fetch(
         `http://35.244.8.93:4000/api/users/product/marketplace?institute=${props.match.params.id}`,
         {
@@ -31,11 +31,14 @@ function NewHome(props) {
       setProducts(productResponse.products);
       setLoading(false);
     } catch (error) {
-        setprodError(error.message)
+      setprodError(error.message);
       console.log("Marketplace" + error);
     }
   };
-  useEffect(() => fetchProducts(), []);
+  useEffect(() => {
+    fetchProducts();
+    setInstId(props.match.params.id);
+  }, []);
   const data = products.map(({ ...rest }) => {
     return <CourseView key={rest.id} {...rest} id2={props.match.params.id} />;
   });
@@ -54,19 +57,20 @@ function NewHome(props) {
                 <div class="align">
                   <div class="anim">
                     <h1 class="intro-block-heading">
-                    Practice beats talent &amp; when talent doesn’t practice
+                      Practice beats talent &amp; when talent doesn’t practice
                     </h1>
                   </div>
                   <div class="anim delay1">
                     <p>
-                    Online adaptive practice at student’s learning pace,
-                     along with analysis and improvement plan can boost results significantly
+                      Online adaptive practice at student’s learning pace, along
+                      with analysis and improvement plan can boost results
+                      significantly
                     </p>
                   </div>
                   <div class="anim delay2">
                     <div class="btns-wrap">
                       <a
-                        href={"/course-list/"+props.match.params.id}
+                        href={"/course-list/" + props.match.params.id}
                         class="btn btn-warning btn-theme text-uppercase"
                       >
                         Our Courses
@@ -136,12 +140,10 @@ function NewHome(props) {
           <div className="slider popular-posts-slider">
             {/* {products && products.map((product)=>( */}
 
-                 {data}
+            {data}
             {/* ))} */}
-
-            
-            </div>
-						</div>
+          </div>
+        </div>
       </section>
       {/* categories aside */}
       <aside class="bg-cover categories-aside text-center background_1920_365">

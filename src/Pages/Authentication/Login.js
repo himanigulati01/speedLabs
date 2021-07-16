@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import { withRouter } from "react-router";
-
-import { getInstituteId, login, setInstituteId } from "../../utils";
-import { isLogged, userEmail, UserDetails, inst_id } from "../../States";
+import { setInstituteId } from "../../utils/index";
+import { login } from "../../utils";
+import { isLogged, userEmail, UserDetails } from "../../States";
 import { useRecoilState } from "recoil";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -46,7 +46,6 @@ function SignIn(props) {
   const [, setUserDetails] = useRecoilState(UserDetails);
   const [user_email, setEmail] = useRecoilState(userEmail);
   const [password, setPassword] = useState("");
-  const [, setInstituteId] = useRecoilState(inst_id);
 
   function validateForm() {
     return user_email.length > 0 && password.length > 0;
@@ -69,10 +68,12 @@ function SignIn(props) {
       const loginCredentials = await response.json();
       login(loginCredentials.token);
       console.log(loginCredentials);
+
       setInstituteId(loginCredentials.details.user_inst_id);
       setUserDetails(loginCredentials.details);
       setIsLogged(true);
-      props.history.push(`/${getInstituteId()}`);
+      props.history.push(`/${loginCredentials.details.user_inst_id}`);
+      console.log(loginCredentials.details.user_inst_id);
     } catch (error) {
       console.log("Login.js" + error);
     }
@@ -129,7 +130,7 @@ function SignIn(props) {
             className={classes.submit}
             disabled={!validateForm()}
           >
-            Sign In
+            Log In
           </Button>
           <Grid container>
             <Grid item xs>
