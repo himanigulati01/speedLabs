@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-
+import "./Header.css";
 import { withRouter } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { CartLength, isLogged } from "../States";
+import { CartLength, inst_id, isLogged } from "../States";
 import { getInstituteId, getToken } from "../utils";
 import { isLogin, logout } from "../utils";
 import { MdLibraryBooks } from "react-icons/md";
@@ -10,15 +10,14 @@ import { FaShoppingCart } from "react-icons/fa";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { GiBookshelf } from "react-icons/gi";
 import { BiLogOut } from "react-icons/bi";
+import { AiFillHome } from "react-icons/ai";
 import Avatar from "@material-ui/core/Avatar";
 import Badge from "@material-ui/core/Badge";
 function Header(props) {
-  //const [cartitems, setCartItems] = useRecoilState(cartItemsAdded);
   const [cartlength, setCartlength] = useRecoilState(CartLength);
-  // const [, setPayload] = useRecoilState(cartPayloader);
-  // const [showLinks, setShowLinks] = useState(false);
+  const [instId] = useRecoilState(inst_id);
   const [currentUser, setCurrentUser] = useRecoilState(isLogged);
-  // const inst_id = localStorage.getItem("user_inst_id");
+
   useEffect(() => {
     setCurrentUser(isLogin());
     fetchCartItems();
@@ -150,20 +149,57 @@ function Header(props) {
                 >
                   {/* main navigation */}
                   <ul class="nav navbar-nav navbar-right main-navigation text-uppercase font-lato">
-                    <li class="dropdown">
-                      <DashboardIcon />
-                      <a href={`/course-list/${getInstituteId()}`}>
-                        All Courses
+                    <li>
+                      <a
+                        href={
+                          getInstituteId()
+                            ? `/${getInstituteId()}`
+                            : `/${instId}`
+                        }
+                        className="tooltip"
+                      >
+                        <AiFillHome style={{ width: "23px", height: "auto" }} />
+                        <span className="tooltiptext">Home</span>
                       </a>
                     </li>
 
                     <li>
-                      <a href="/cart">
+                      <a
+                        href={
+                          getInstituteId()
+                            ? `/course-list/${getInstituteId()}`
+                            : `/course-list/${instId}`
+                        }
+                        className="tooltip"
+                      >
+                        <DashboardIcon
+                          style={{ width: "23px", height: "auto" }}
+                        />
+                        <span className="tooltiptext">All Courses</span>
+                      </a>
+                    </li>
+
+                    <li>
+                      <a
+                        href="/cart"
+                        className="tooltip"
+                        style={{
+                          position: "relative",
+
+                          top: "4px",
+                        }}
+                      >
                         <Badge badgeContent={cartlength} color="primary">
                           <FaShoppingCart
-                            style={{ width: "2em", height: "1.6em" }}
+                            style={{
+                              position: "relative",
+                              bottom: "7px",
+                              width: "23px",
+                              height: "auto",
+                            }}
                           />
                         </Badge>
+                        <span className="tooltiptext">Cart</span>
                       </a>
                     </li>
 
@@ -202,7 +238,12 @@ function Header(props) {
                             </a>
                           </li>
                           <li>
-                            <a onClick={() => logout()}>
+                            <a
+                              onClick={() => {
+                                window.location.reload();
+                                logout();
+                              }}
+                            >
                               <BiLogOut /> LogOut
                             </a>
                           </li>
@@ -211,35 +252,6 @@ function Header(props) {
                     )}
                   </ul>
                 </div>
-                {/* navbar form */}
-                {/* <form
-                  action="#"
-                  class="navbar-form navbar-search-form navbar-right"
-                >
-                  <a
-                    class="fas fa-search search-opener"
-                    role="button"
-                    data-toggle="collapse"
-                    href="#searchCollapse"
-                    aria-expanded="false"
-                    aria-controls="searchCollapse"
-                  >
-                    <span class="sr-only">search opener</span>
-                  </a>
-                 
-                  <div class="collapse search-collapse" id="searchCollapse">
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Search &hellip;"
-                      />
-                      <button type="button" class="fas fa-search btn">
-                        <span class="sr-only">search</span>
-                      </button>
-                    </div>
-                  </div>
-                </form> */}
               </nav>
             </div>
           </div>

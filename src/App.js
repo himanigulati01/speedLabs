@@ -1,62 +1,3 @@
-// import "./App.css";
-// import React from "react";
-// import Navbar from "./Components/Navbar/Navbar";
-// import Banner from "./Components/Banner/Banner";
-// import { Route, Switch } from "react-router-dom";
-// import ProductDescription from "./Components/Marketplace/ProductDescription";
-// import Login from "./Pages/Authentication/Login";
-
-// import GetItemsCart from "./Pages/GetItemsCart";
-// import PrivateRoute from "./utils/PrivateRoute";
-// import Orders from "./Components/Orders/Orders1";
-// import "./App.css";
-// import Home from "./Components/Home";
-// import PurchasedProduct from "./Components/Marketplace/PurchasedProduct";
-// import Register from "./Pages/Authentication/Register";
-// import NotFound from "./Components/NotFound";
-// import OrderDetails from "./Components/Orders/OrderDetails";
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <Route path="/">
-//         <Navbar />
-//       </Route>
-//       <Route exact path="/">
-//         <NotFound />
-//       </Route>
-
-//       <Switch>
-//         <Route path="/login" exact component={Login} />
-//         <Route path="/register" exact component={Register} />
-
-//         <PrivateRoute path="/cart" exact component={GetItemsCart} />
-//         <PrivateRoute
-//           path="/orders/order-details/:id"
-//           exact
-//           component={OrderDetails}
-//         />
-//         <PrivateRoute path="/orders" exact component={Orders} />
-//         <PrivateRoute path="/my-courses" exact component={PurchasedProduct} />
-//         <Route
-//           path="/marketplace/:id/details/:id2"
-//           component={ProductDescription}
-//         />
-//         <Route path="/marketplace">
-//           <Banner />
-
-//           <Route
-//             path={["/marketplace?institute=inst-id", "/"]}
-//             component={Home}
-//           />
-//         </Route>
-//       </Switch>
-//     </div>
-//   );
-// }
-
-// export default App;
-
 /**************************           NEW    *********************/
 import Login from "./Pages/Authentication/Login";
 import Register from "./Pages/Authentication/Register";
@@ -64,8 +5,8 @@ import Register from "./Pages/Authentication/Register";
 import NewHome from "./Components/newHome";
 import NotFound from "./Components/404";
 import CourseDescription from "./Components/CourseDescription";
-import PurchasedProduct from "./Components/Marketplace/PurchasedProduct";
-import { Route, Switch } from "react-router-dom";
+import PurchasedProduct from "./Components/PurchasedProduct";
+import { Redirect, Route, Switch } from "react-router-dom";
 import GetItemsCart from "./Pages/GetItemsCart";
 import OrderHistory from "./Components/Orders/OrderHistory";
 import orderDetailsPage from "./Components/Orders/OrderDetails";
@@ -74,7 +15,7 @@ import Courselist from "./Components/Courselist";
 import Header from "./Components/Header";
 
 function App(props) {
-  console.log(props);
+  //console.log(props);
   return (
     <div>
       {/* main container of all the page elements */}
@@ -84,14 +25,14 @@ function App(props) {
         <Header />
         <main id="main">
           {/* intro block */}
-          <Route exact path="/" component={NotFound} />
+
           <Switch>
             <Route
               exact
               path="/:id/description/:id2"
               component={CourseDescription}
             />
-            <Route path="/course-list/:id" component={Courselist} />
+            <Route exact path="/course-list/:id" component={Courselist} />
             <Route exact path="/purchased" component={PurchasedProduct} />
             <Route exact path="/cart" component={GetItemsCart} />
             <Route exact path="/orders" component={OrderHistory} />
@@ -101,12 +42,14 @@ function App(props) {
               component={orderDetailsPage}
             />
 
-            <Route path="/login" component={Login} />
+            <Route exact path="/login" component={Login} />
             <Route path="/:id">
               <NewHome />
             </Route>
             {/* <Route exact path="/:id/courses" component={Courses} /> */}
             <Route exact path="/register" component={Register} />
+            <Route path="*" component={NotFound} />
+            <Redirect from="*" to="" />
           </Switch>
         </main>
         {/* footer area container */}
@@ -130,9 +73,6 @@ function App(props) {
                   brings cades the industry expertise in driving our investment
                   approach. portfolio constructor and allocation
                 </p>
-                <a href="#" class="btn btn-default text-uppercase">
-                  Start Leaning Now
-                </a>
               </div>
 
               <nav class="col-xs-12 col-sm-6 col-md-3 col">

@@ -5,6 +5,7 @@ import Loader from "../loader";
 import MessageBox from "../MessageBox";
 import { inst_id, productDetails } from "../States";
 import CourseView from "./CourseView";
+import Carousel from "react-elastic-carousel";
 
 function NewHome(props) {
   console.log(props.match.params.id);
@@ -13,6 +14,13 @@ function NewHome(props) {
   const [prodError, setprodError] = useState("");
   const [instId, setInstId] = useRecoilState(inst_id);
   console.log(instId);
+  setInstId(props.match.params.id);
+
+  const breakPoints = [
+    { width: 400, itemsToShow: 1 },
+    { width: 500, itemsToShow: 2 },
+    { width: 1000, itemsToShow: 4 },
+  ];
   const fetchProducts = async () => {
     try {
       if (!products) setLoading(true);
@@ -75,6 +83,12 @@ function NewHome(props) {
                       >
                         Our Courses
                       </a>
+                      <a
+                        href={"/login"}
+                        class="btn btn-warning btn-theme text-uppercase"
+                      >
+                        Login
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -82,8 +96,10 @@ function NewHome(props) {
             </article>
           </div>
         </div>
+
         <div class="container">
           {/* features aside */}
+
           <aside class="features-aside">
             <a href="#" class="col">
               <span class="icn-wrap text-center no-shrink">
@@ -137,12 +153,12 @@ function NewHome(props) {
         </header>
         <div class="row">
           {/* popular posts slider */}
-          <div className="slider popular-posts-slider">
-            {/* {products && products.map((product)=>( */}
+          {/* <div className="slider popular-posts-slider"> */}
+          <Carousel breakPoints={breakPoints}>{data}</Carousel>
+          {/* {products && products.map((product)=>( */}
 
-            {data}
-            {/* ))} */}
-          </div>
+          {/* ))} */}
+          {/* </div> */}
         </div>
       </section>
       {/* categories aside */}

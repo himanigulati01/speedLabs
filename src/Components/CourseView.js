@@ -30,7 +30,7 @@ function CourseView(props) {
         {/* popular post */}
         <article class="popular-post">
           <div class="aligncenter">
-            <img src={props.image_url} alt="desc" />
+            <img src={props.image_url} alt="desc" style={{ height: "130px" }} />
           </div>
           <div>
             <strong class="bg-primary text-white font-lato text-uppercase price-tag">
