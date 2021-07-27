@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import "./cart.css";
+import "./Cart.css";
 
 import {
   cartItemsAdded,
