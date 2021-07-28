@@ -52,6 +52,16 @@ function NewHome(props) {
   });
   return (
     <>
+      {/* <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/ZfecUNNGFxs?showinfo=0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <a href="https://www.youtube.com/embed/RlP59ewn1Ew?showInfo=0">click</a> */}
       <section class="intro-block">
         {loading && <Loader></Loader>}
         <div class="slider fade-slider">

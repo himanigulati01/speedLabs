@@ -11,7 +11,7 @@ import GetItemsCart from "./Pages/GetItemsCart";
 import OrderHistory from "./Components/Orders/OrderHistory";
 import orderDetailsPage from "./Components/Orders/OrderDetails";
 import Courselist from "./Components/Courselist";
-// import './App.css';
+
 import Header from "./Components/Header";
 
 function App(props) {
@@ -23,6 +23,7 @@ function App(props) {
         {/* header of the page */}
         {/* contain main informative part of the site */}
         <Header />
+
         <main id="main">
           {/* intro block */}
 

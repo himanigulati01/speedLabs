@@ -9,6 +9,11 @@ function Courselist(props) {
   const [catId, setCatId] = useState(null);
   const [catDetails, setCatDetails] = useState([]);
   const [search, setSearch] = useState("");
+  const [filterValue, setFilterValue] = useState("");
+  //const [filteredProducts, setFilteredProducts] = useState(products);
+
+  console.log(filterValue);
+
   console.log(props);
   useEffect(() => {
     fetchCategories();
@@ -51,32 +56,22 @@ function Courselist(props) {
       console.log("Marketplace" + error);
     }
   };
-  //   const fetchCategories = async () => {
-  //     console.log(id);
-  //     try {
-  //       const response = await fetch(
-  //         `http://35.244.8.93:4000/api/users/category/allcategories?institute=10`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       const categoriesDetails = await response.json();
-  //       console.log(response);
-  //       console.log(categoriesDetails);
-  //       setCatDetails(categoriesDetails);
-  //     } catch (error) {
-  //       console.log("CATEGORIES.JS  " + error);
-  //     }
-  //   };
+
   useEffect(() => fetchProducts(), []);
+
   const data =
     products.length === 0 ? (
       <NotFound />
     ) : (
       products
+
+        .filter((val) => {
+          if (filterValue === "" || filterValue === "Reset") {
+            return val;
+          } else if (val.course_rating >= filterValue) {
+            return val;
+          }
+        })
         .filter((val) => {
           if (search === null) {
             return val;
@@ -91,7 +86,13 @@ function Courselist(props) {
           } else if (val.category === catId) return val;
         })
         .map(({ ...rest }) => {
-          return <CourselistItem key={rest.id} {...rest} id2={props.match.params.id}/>;
+          return (
+            <CourselistItem
+              key={rest.id}
+              {...rest}
+              id2={props.match.params.id}
+            />
+          );
         })
     );
   return (
@@ -160,7 +161,38 @@ function Courselist(props) {
                 </fieldset>
               </form>
             </section>
+            <section class="widget widget_search">
+              <h3>Rating Filter</h3>
+              {/* <!-- search form --> */}
+              <ul class="list-unstyled text-capitalize font-lato">
+                <li class="cat-item cat-item-1">
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={(event) => setFilterValue("Reset")}
+                  >
+                    Reset
+                  </span>
+                </li>
+                <li class="cat-item cat-item-1">
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={(event) => setFilterValue(4)}
+                  >
+                    4+
+                  </span>
+                </li>
+                <li class="cat-item cat-item-1">
+                  <span
+                    style={{ cursor: "pointer" }}
+                    onClick={(event) => setFilterValue(3)}
+                  >
+                    3+
+                  </span>
+                </li>
+              </ul>
+            </section>
             {/* <!-- widget categories --> */}
+
             <section class="widget widget_categories">
               <h3>Course Categories</h3>
               <ul class="list-unstyled text-capitalize font-lato">

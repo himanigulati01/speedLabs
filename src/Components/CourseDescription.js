@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-
+import moment from "moment";
 import { MdDescription } from "react-icons/md";
 import { FaInfoCircle } from "react-icons/fa";
 import { BsCheckAll } from "react-icons/bs";
@@ -9,12 +9,15 @@ import ReactPlayer from "react-player";
 import Loader from "../loader";
 import MessageBox from "../MessageBox";
 import { getToken } from "../utils";
+import Share from "./Share";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Backdrop from "@material-ui/core/Backdrop";
 import { Button, Link } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Fade from "@material-ui/core/Fade";
+import Rating from "@material-ui/lab/Rating";
+import { StarBorderOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 function CourseDescription(props) {
   const [desc, setDesc] = useState("");
   const [isReadMore, setIsReadMore] = useState(true);
+  const [reviews, setReviews] = useState([]);
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
@@ -46,6 +50,7 @@ function CourseDescription(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [contentModal, setContentModal] = useState({});
+  const [review, setReview] = useState({});
 
   const handleOpen = (url, name) => {
     setOpen(true);
@@ -62,9 +67,11 @@ function CourseDescription(props) {
     if (getToken()) {
       console.log("with Auth");
       fetchProductDetailAuth();
+      fetchReviews();
     } else {
       console.log("without Auth");
       fetchProductDetail();
+      fetchReviews();
     }
   }, []);
 
@@ -163,8 +170,8 @@ function CourseDescription(props) {
     }
   };
 
-  console.log(productDetail);
-  console.log(contentList);
+  // console.log(productDetail);
+  // console.log(contentList);
 
   const addToCart = async (productId) => {
     try {
@@ -188,6 +195,24 @@ function CourseDescription(props) {
       console.log(addToCartResponse);
     } catch (error) {
       console.log("AddtoCart " + error);
+    }
+  };
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch(
+        `http://35.244.8.93:4000/api/users/product/${props.match.params.id}/reviews`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const fetchReviews = await response.json();
+      setReviews(fetchReviews.reviews);
+      console.log(fetchReviews);
+    } catch (error) {
+      console.log("reviews" + error);
     }
   };
 
@@ -218,7 +243,16 @@ function CourseDescription(props) {
           {/* content */}
           <article id="content" class="col-xs-12 col-md-9">
             {/* content h1 */}
-            <h1 class="content-h1 fw-semi"> {productDetail.product_name}</h1>
+            <h1 class="content-h1 fw-semi">
+              {" "}
+              {productDetail.product_name}
+              <div style={{ display: "inline", height: "fit-content" }}>
+                <Share
+                  title="My Web Share Adventures"
+                  text="Hello World! I shared this content via Web Share"
+                />
+              </div>
+            </h1>
             {/* view header */}
             <header class="view-header row">
               <div class="col-xs-12 col-sm-9 d-flex">
@@ -533,12 +567,105 @@ function CourseDescription(props) {
                 </span>
               </div>
             </section>
-
-            {/* widget categories */}
-            {/* widget intro */}
-            {/* widget popular posts */}
           </aside>
         </div>
+        {/* widget categories */}
+        {/* widget intro */}
+        {/* widget popular posts */}
+        {/* Reviews Section */}
+        {reviews && (
+          <>
+            <h2>Reviews</h2>
+            <h3 class="h6 fw-semi">
+              There are {reviews.length} reviews on this course
+            </h3>
+            <ul class="list-unstyled reviewsList" style={{ width: "70%" }}>
+              {reviews.map((review) => (
+                <li>
+                  <div class="description-wrap">
+                    <div class="descrHead">
+                      <Rating
+                        name="half-rating"
+                        value={review.rating}
+                        precision={0.5}
+                        readOnly
+                      />
+                    </div>
+                    <h3>
+                      {review.title} -{" "}
+                      {moment.utc(review.updated_at).format("MM/DD/YYYY")}
+                    </h3>
+                    <p>{review.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <form
+              action="#"
+              class="reviesSubmissionForm"
+              style={{ width: "75%" }}
+            >
+              <h2 class="text-noCase">Add a Review</h2>
+              <p>
+                Required fields are marked <span class="required">*</span>
+              </p>
+              <div class="form-group">
+                <span class="formLabel fw-normal font-lato no-shrink">
+                  Your Rating
+                </span>
+                <Rating
+                  name="half-rating"
+                  precision={0.5}
+                  onClick={(e) =>
+                    setReview({ ...review, rating: e.target.value })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label
+                  for="name"
+                  class="formLabel fw-normal font-lato no-shrink"
+                >
+                  Title <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control element-block"
+                  onChange={(e) =>
+                    setReview({ ...review, title: e.target.value })
+                  }
+                />
+              </div>
+              <div class="form-group">
+                <label
+                  for="rview"
+                  class="formLabel fw-normal font-lato no-shrink"
+                >
+                  Your Review <span class="required">*</span>
+                </label>
+                <textarea
+                  id="rview"
+                  class="form-control element-block"
+                  onChange={(e) =>
+                    setReview({ ...review, description: e.target.value })
+                  }
+                ></textarea>
+              </div>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(review);
+                }}
+                type="submit"
+                class="btn btn-theme btn-warning text-uppercase font-lato fw-bold"
+              >
+                Submit
+              </button>
+            </form>
+          </>
+        )}
       </div>
     </>
   );

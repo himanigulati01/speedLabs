@@ -1,7 +1,7 @@
 import React from "react";
 
 import Rating from "@material-ui/lab/Rating";
-import OfflineBoltIcon from "@material-ui/icons/OfflineBolt";
+
 import Box from "@material-ui/core/Box";
 
 function CourseListItem(props) {
@@ -76,6 +76,7 @@ function CourseListItem(props) {
               </a>
             </li>
           </ul>
+
           <Box component="fieldset" borderColor="transparent">
             <Rating name="read-only" value={props.course_rating} readOnly />
           </Box>
